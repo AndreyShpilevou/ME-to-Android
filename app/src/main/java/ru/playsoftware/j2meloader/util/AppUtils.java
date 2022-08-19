@@ -29,8 +29,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
-import ru.playsoftware.j2meloader.appsdb.AppItem;
-import ru.playsoftware.j2meloader.appsdb.AppRepository;
+import app.dao.AppItem;
+import app.dao.AppRepository;
 import ru.playsoftware.j2meloader.config.Config;
 import ru.woesss.j2me.jar.Descriptor;
 

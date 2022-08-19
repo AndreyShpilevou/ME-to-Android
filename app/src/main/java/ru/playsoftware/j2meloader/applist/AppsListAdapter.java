@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.playsoftware.j2meloader.R;
-import ru.playsoftware.j2meloader.appsdb.AppItem;
+import app.dao.AppItem;
 
 public class AppsListAdapter extends BaseAdapter implements Filterable {
 

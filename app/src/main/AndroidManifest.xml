@@ -22,7 +22,7 @@
 <!--    app.App-->
 <!--    .EmulatorApplication-->
     <application
-        android:name=".EmulatorApplication"
+        android:name="app.EmulatorApplication"
         android:allowBackup="false"
         android:appCategory="game"
         android:hasFragileUserData="true"
@@ -131,7 +131,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".donations.DonationsActivity" android:exported="false" />
         <activity android:name=".settings.KeyMapperActivity" android:exported="false" />
         <activity
             android:name=".filepicker.FilteredFilePickerActivity"

@@ -46,8 +46,8 @@ import java.io.IOException;
 import java.util.List;
 
 import ru.playsoftware.j2meloader.R;
-import ru.playsoftware.j2meloader.appsdb.AppItem;
-import ru.playsoftware.j2meloader.appsdb.AppRepository;
+import app.dao.AppItem;
+import app.dao.AppRepository;
 import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.config.ConfigActivity;
 import ru.playsoftware.j2meloader.config.ProfilesActivity;

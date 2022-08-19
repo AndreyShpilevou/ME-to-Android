@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import ru.playsoftware.j2meloader.appsdb.AppRepository;
+import app.dao.AppRepository;
 
 public class AppListModel extends AndroidViewModel {
 	private final AppRepository appRepository;

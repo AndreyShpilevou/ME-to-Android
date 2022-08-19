@@ -1,6 +1,7 @@
 package ru.playsoftware.j2meloader;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
@@ -152,7 +153,7 @@ public class MainActivity extends BaseActivity {
 	private void alertCreateDir() {
 		String emulatorDir = Config.getEmulatorDir();
 		String lblChange = getString(R.string.change);
-		String msg = getString(R.string.alert_msg_workdir_not_exists, emulatorDir, lblChange);
+		@SuppressLint("StringFormatMatches") String msg = getString(R.string.alert_msg_workdir_not_exists, emulatorDir, lblChange);
 		new AlertDialog.Builder(this)
 				.setTitle(android.R.string.dialog_alert_title)
 				.setCancelable(false)
