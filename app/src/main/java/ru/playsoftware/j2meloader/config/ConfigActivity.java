@@ -87,8 +87,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 	protected AppCompatCheckBox cbLockAspect;
 	protected EditText tfScreenBack;
 	protected EditText tfScaleRatioValue;
-	protected Spinner spOrientation;
-	protected Spinner spScreenGravity;
 	protected Spinner spScaleType;
 	protected Checkable cxFilter;
 	protected Checkable cxImmediate;
@@ -214,10 +212,8 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		tfScreenHeight = findViewById(R.id.tfScreenHeight);
 		cbLockAspect = findViewById(R.id.cbLockAspect);
 		tfScreenBack = findViewById(R.id.tfScreenBack);
-		spScreenGravity = findViewById(R.id.spScreenGravity);
 		spScaleType = findViewById(R.id.spScaleType);
 		tfScaleRatioValue = findViewById(R.id.tfScaleRatioValue);
-		spOrientation = findViewById(R.id.spOrientation);
 		cxFilter = findViewById(R.id.cxFilter);
 		cxImmediate = findViewById(R.id.cxImmediate);
 		spGraphicsMode = findViewById(R.id.spGraphicsMode);
@@ -639,9 +635,7 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		}
 		tfScreenBack.setText(String.format("%06X", params.screenBackgroundColor));
 		tfScaleRatioValue.setText(Integer.toString(params.screenScaleRatio));
-		spOrientation.setSelection(params.orientation);
 		spScaleType.setSelection(params.screenScaleType);
-		spScreenGravity.setSelection(params.screenGravity);
 		cxFilter.setChecked(params.screenFilter);
 		cxImmediate.setChecked(params.immediateMode);
 		cxParallel.setChecked(params.parallelRedrawScreen);
@@ -697,8 +691,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 			} catch (NumberFormatException e) {
 				params.screenScaleRatio = 100;
 			}
-			params.orientation = spOrientation.getSelectedItemPosition();
-			params.screenGravity = spScreenGravity.getSelectedItemPosition();
 			params.screenScaleType = spScaleType.getSelectedItemPosition();
 			params.screenFilter = cxFilter.isChecked();
 			params.immediateMode = cxImmediate.isChecked();

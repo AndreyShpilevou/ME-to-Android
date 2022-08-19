@@ -1,25 +1,8 @@
-/*
- * Copyright 2017-2018 Nikita Shakarun
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package ru.playsoftware.j2meloader;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -27,7 +10,6 @@ import android.os.Build;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
-import androidx.preference.PreferenceManager;
 
 import org.acra.ACRA;
 import org.acra.config.CoreConfigurationBuilder;
@@ -39,19 +21,11 @@ import java.util.Arrays;
 
 import javax.microedition.util.ContextHolder;
 
-import ru.playsoftware.j2meloader.util.Constants;
-
 public class EmulatorApplication extends Application {
 	private static final String[] VALID_SIGNATURES = {
 			"78EF7758720A9902F731ED706F72C669C39B765C", // GPlay
 			"289F84A32207DF89BE749481ED4BD07E15FC268F", // F-Droid
 			"FA8AA497194847D5715BAA62C6344D75A936EBA6" // Private
-	};
-
-	private final SharedPreferences.OnSharedPreferenceChangeListener themeListener = (sharedPreferences, key) -> {
-		if (key.equals(Constants.PREF_THEME)) {
-			setNightMode(sharedPreferences.getString(Constants.PREF_THEME, null));
-		}
 	};
 
 	@SuppressWarnings("ConstantConditions")
@@ -76,9 +50,7 @@ public class EmulatorApplication extends Application {
 				));
 		boolean enabled = isSignatureValid() && !BuildConfig.FLAVOR.equals("dev");
 		ACRA.getErrorReporter().setEnabled(enabled);
-		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-		sp.registerOnSharedPreferenceChangeListener(themeListener);
-		setNightMode(sp.getString(Constants.PREF_THEME, null));
+
 		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 	}
 
@@ -122,30 +94,5 @@ public class EmulatorApplication extends Application {
 			hexChars[i * 2 + 1] = hexArray[v & 0x0F];
 		}
 		return new String(hexChars);
-	}
-
-	void setNightMode(String theme) {
-		if (theme == null) {
-			theme = getString(R.string.pref_theme_default);
-		}
-		switch (theme) {
-			case "light":
-				AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-				break;
-			case "dark":
-				AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-				break;
-			case "auto-battery":
-				AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
-				break;
-			case "auto-time":
-				//noinspection deprecation
-				AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_TIME);
-				break;
-			default:
-			case "system":
-				AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-				break;
-		}
 	}
 }

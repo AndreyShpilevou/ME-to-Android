@@ -33,7 +33,7 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.shell.MidletThread;
 import javax.microedition.util.ContextHolder;
 
-import ru.playsoftware.j2meloader.applist.AppItem;
+import ru.playsoftware.j2meloader.appsdb.AppItem;
 import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.util.AppUtils;
 

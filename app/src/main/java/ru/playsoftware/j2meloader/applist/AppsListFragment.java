@@ -1,27 +1,4 @@
-/*
- * Copyright 2015-2016 Nickolay Savchenko
- * Copyright 2017-2020 Nikita Shakarun
- * Copyright 2018-2022 Yury Kharchenko
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package ru.playsoftware.j2meloader.applist;
-
-import static ru.playsoftware.j2meloader.util.Constants.KEY_APP_URI;
-import static ru.playsoftware.j2meloader.util.Constants.KEY_MIDLET_NAME;
-import static ru.playsoftware.j2meloader.util.Constants.PREF_APP_SORT;
-import static ru.playsoftware.j2meloader.util.Constants.PREF_LAST_PATH;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -33,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,23 +22,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
-import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -73,18 +44,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import ru.playsoftware.j2meloader.R;
+import ru.playsoftware.j2meloader.appsdb.AppItem;
 import ru.playsoftware.j2meloader.appsdb.AppRepository;
 import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.config.ConfigActivity;
 import ru.playsoftware.j2meloader.config.ProfilesActivity;
-import ru.playsoftware.j2meloader.donations.DonationsActivity;
 import ru.playsoftware.j2meloader.filepicker.FilteredFilePickerFragment;
 import ru.playsoftware.j2meloader.info.AboutDialogFragment;
 import ru.playsoftware.j2meloader.info.HelpDialogFragment;
@@ -96,12 +62,12 @@ import ru.playsoftware.j2meloader.util.LogUtils;
 import ru.woesss.j2me.installer.InstallerDialog;
 
 public class AppsListFragment extends ListFragment {
+
 	private static final String TAG = AppsListFragment.class.getSimpleName();
 	private final AppsListAdapter adapter = new AppsListAdapter();
 	private Uri appUri;
 	private SharedPreferences preferences;
 	private AppRepository appRepository;
-	private Disposable searchViewDisposable;
 
 	private final ActivityResultLauncher<String> openFileLauncher = registerForActivityResult(
 			FileUtils.getFilePicker(),
@@ -110,7 +76,7 @@ public class AppsListFragment extends ListFragment {
 	public static AppsListFragment newInstance(Uri data) {
 		AppsListFragment fragment = new AppsListFragment();
 		Bundle args = new Bundle();
-		args.putParcelable(KEY_APP_URI, data);
+		args.putParcelable(Constants.KEY_APP_URI, data);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -119,8 +85,8 @@ public class AppsListFragment extends ListFragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle args = requireArguments();
-		appUri = args.getParcelable(KEY_APP_URI);
-		args.remove(KEY_APP_URI);
+		appUri = args.getParcelable(Constants.KEY_APP_URI);
+		args.remove(Constants.KEY_APP_URI);
 		preferences = PreferenceManager.getDefaultSharedPreferences(requireActivity());
 		AppListModel appListModel = new ViewModelProvider(requireActivity()).get(AppListModel.class);
 		appRepository = appListModel.getAppRepository();
@@ -141,7 +107,7 @@ public class AppsListFragment extends ListFragment {
 		setListAdapter(adapter);
 		FloatingActionButton fab = view.findViewById(R.id.fab);
 		fab.setOnClickListener(v -> {
-			String path = preferences.getString(PREF_LAST_PATH, null);
+			String path = preferences.getString(Constants.PREF_LAST_PATH, null);
 			if (path == null) {
 				File dir = Environment.getExternalStorageDirectory();
 				if (dir.canRead()) {
@@ -150,14 +116,6 @@ public class AppsListFragment extends ListFragment {
 			}
 			openFileLauncher.launch(path);
 		});
-	}
-
-	@Override
-	public void onDestroy() {
-		if (searchViewDisposable != null) {
-			searchViewDisposable.dispose();
-		}
-		super.onDestroy();
 	}
 
 	private void alertDbError(Throwable throwable) {
@@ -301,7 +259,7 @@ public class AppsListFragment extends ListFragment {
 		String title = appItem.getTitle();
 		Intent launchIntent = new Intent(Intent.ACTION_DEFAULT, Uri.parse(appItem.getPathExt()),
 				activity, ConfigActivity.class);
-		launchIntent.putExtra(KEY_MIDLET_NAME, title);
+		launchIntent.putExtra(Constants.KEY_MIDLET_NAME, title);
 		ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(activity, title)
 				.setIntent(launchIntent)
 				.setShortLabel(title)
@@ -313,26 +271,6 @@ public class AppsListFragment extends ListFragment {
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 		inflater.inflate(R.menu.main, menu);
-		final MenuItem searchItem = menu.findItem(R.id.action_search);
-		SearchView searchView = (SearchView) searchItem.getActionView();
-		searchViewDisposable = Observable.create((ObservableOnSubscribe<String>) emitter ->
-				searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-					@Override
-					public boolean onQueryTextSubmit(String query) {
-						emitter.onNext(query);
-						return true;
-					}
-
-					@Override
-					public boolean onQueryTextChange(String newText) {
-						emitter.onNext(newText);
-						return true;
-					}
-				})).debounce(300, TimeUnit.MILLISECONDS)
-				.map(String::toLowerCase)
-				.distinctUntilChanged()
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(charSequence -> adapter.getFilter().filter(charSequence));
 	}
 
 	@Override
@@ -351,9 +289,6 @@ public class AppsListFragment extends ListFragment {
 		} else if (itemId == R.id.action_help) {
 			HelpDialogFragment helpDialogFragment = new HelpDialogFragment();
 			helpDialogFragment.show(getChildFragmentManager(), "help");
-		} else if (itemId == R.id.action_donate) {
-			Intent donationsIntent = new Intent(activity, DonationsActivity.class);
-			startActivity(donationsIntent);
 		} else if (itemId == R.id.action_save_log) {
 			try {
 				LogUtils.writeLog();
@@ -364,30 +299,8 @@ public class AppsListFragment extends ListFragment {
 			}
 		} else if (itemId == R.id.action_exit_app) {
 			activity.finish();
-		} else if (itemId == R.id.action_sort) {
-			showSortDialog();
 		}
 		return false;
-	}
-
-	private void showSortDialog() {
-		int variant = appRepository.getSort();
-		SortAdapter adapter = new SortAdapter(requireActivity(), variant);
-		AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity())
-				.setTitle(R.string.pref_app_sort_title)
-				.setAdapter(adapter, (d, v) -> {
-					adapter.setVariant(v);
-					setSort(v);
-					d.dismiss();
-				});
-		builder.show();
-	}
-
-	private void setSort(int sortVariant) {
-		if (appRepository.getSort() == sortVariant) {
-			sortVariant |= 0x80000000;
-		}
-		preferences.edit().putInt(PREF_APP_SORT, sortVariant).apply();
 	}
 
 	private void onDbUpdated(List<AppItem> items) {
@@ -395,42 +308,6 @@ public class AppsListFragment extends ListFragment {
 		if (appUri != null) {
 			InstallerDialog.newInstance(appUri).show(getParentFragmentManager(), "installer");
 			appUri = null;
-		}
-	}
-
-	private static class SortAdapter extends ArrayAdapter<String> {
-		private int variant;
-		private final Drawable drawableArrowDown;
-		private final Drawable drawableArrowUp;
-
-		public SortAdapter(FragmentActivity activity, int variant) {
-			super(activity,
-					android.R.layout.simple_list_item_1,
-					activity.getResources().getStringArray(R.array.pref_app_sort_entries));
-			this.variant = variant;
-			drawableArrowDown = AppCompatResources.getDrawable(activity, R.drawable.ic_arrow_down);
-			drawableArrowUp = AppCompatResources.getDrawable(activity, R.drawable.ic_arrow_up);
-		}
-
-		@NonNull
-		@Override
-		public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-			TextView tv = (TextView) super.getView(position, convertView, parent);
-			if ((variant & 0x7FFFFFFF) == position) {
-				TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds(tv, null, null,
-						variant >= 0 ? drawableArrowDown : drawableArrowUp, null);
-			} else {
-				tv.setCompoundDrawables(null, null, null, null);
-			}
-			return tv;
-		}
-
-		public void setVariant(int variant) {
-			if (variant == this.variant) {
-				variant |= 0x80000000;
-			}
-			this.variant = variant;
-			notifyDataSetChanged();
 		}
 	}
 }

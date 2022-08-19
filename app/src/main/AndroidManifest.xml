@@ -19,6 +19,8 @@
     <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
     <uses-feature android:name="android.hardware.location" android:required="false" />
 
+<!--    app.App-->
+<!--    .EmulatorApplication-->
     <application
         android:name=".EmulatorApplication"
         android:allowBackup="false"
@@ -35,8 +37,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="r"
         tools:ignore="RtlEnabled">
+
+<!--        <activity android:name=".MainActivity"></activity>-->
+
+<!--        app.activities.StartActivity-->
+<!--        app.activities.MainActivity-->
         <activity
-            android:name=".MainActivity"
+            android:name="app.activities.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="true"
             android:launchMode="singleTask">

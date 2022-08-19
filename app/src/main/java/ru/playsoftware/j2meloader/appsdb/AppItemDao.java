@@ -30,13 +30,18 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Single;
-import ru.playsoftware.j2meloader.applist.AppItem;
 
 @Dao
 public interface AppItemDao {
 
 	@RawQuery(observedEntities = AppItem.class)
 	Flowable<List<AppItem>> getAll(SupportSQLiteQuery query);
+
+//	@RawQuery(observedEntities = AppItem.class)
+//	Flowable<List<AppItem>> getAll();
+
+	@Query("SELECT * FROM apps")
+	Flowable<List<AppItem>> getAll();
 
 	@RawQuery(observedEntities = AppItem.class)
 	Single<List<AppItem>> getAllSingle(SupportSQLiteQuery query);
@@ -64,4 +69,7 @@ public interface AppItemDao {
 
 	@Query("SELECT * FROM apps WHERE id = :id")
 	AppItem get(int id);
+
+//	@Query("SELECT * FROM apps")
+//	List<AppItem> getAll();
 }

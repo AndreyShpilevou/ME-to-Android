@@ -44,7 +44,7 @@ import java.util.jar.JarFile;
 
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
-import ru.playsoftware.j2meloader.applist.AppItem;
+import ru.playsoftware.j2meloader.appsdb.AppItem;
 import ru.playsoftware.j2meloader.appsdb.AppRepository;
 import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.util.ConverterException;
