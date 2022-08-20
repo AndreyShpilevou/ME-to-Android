@@ -45,7 +45,7 @@ class MainActivity : BaseActivity() {
     }
 
     private lateinit var preferences: SharedPreferences
-    private var appListModel: AppListModel? = null
+    private lateinit var appListModel: AppListModel
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +54,9 @@ class MainActivity : BaseActivity() {
         if (FileUtils.isExternalStorageLegacy()) {
             permissionsLauncher.launch(STORAGE_PERMISSIONS)
         }
+
         appListModel = ViewModelProvider(this)[AppListModel::class.java]
+
         if (savedInstanceState == null) {
             val intent = intent
             var uri: Uri? = null
