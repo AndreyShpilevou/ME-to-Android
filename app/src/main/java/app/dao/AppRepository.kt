@@ -24,7 +24,7 @@ import java.util.ArrayList
 class AppRepository(model: AppListModel) : OnSharedPreferenceChangeListener {
 
     private val context: Context
-    private val listLiveData = MutableLiveData<List<AppItem>?>()
+    private val listLiveData = MutableLiveData<List<AppItem>>()
     private val errorsLiveData = MutableLiveData<Throwable>()
     private val compositeDisposable = CompositeDisposable()
     private val errorObserver = ErrorObserver(errorsLiveData)
@@ -54,7 +54,7 @@ class AppRepository(model: AppListModel) : OnSharedPreferenceChangeListener {
         compositeDisposable.add(listConnectableFlowable.connect())
     }
 
-    fun observeApps(owner: LifecycleOwner?, observer: Observer<in List<AppItem>?>?) {
+    fun observeApps(owner: LifecycleOwner?, observer: (List<AppItem>) -> Unit) {
         listLiveData.observe(owner!!, observer!!)
     }
 

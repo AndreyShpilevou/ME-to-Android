@@ -117,6 +117,11 @@ fun <T : View> T.onClick(click: (View) -> Unit) : T {
     return this
 }
 
+fun <T : View> T.onLongClick(click: (View) -> Boolean) : T {
+    setOnLongClickListener(click)
+    return this
+}
+
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
