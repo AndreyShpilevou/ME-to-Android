@@ -19,7 +19,23 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
 
-class EmulatorApplication : Application() {
+class App : Application() {
+
+    companion object{
+        private val VALID_SIGNATURES = arrayOf(
+            "78EF7758720A9902F731ED706F72C669C39B765C",  // GPlay
+            "289F84A32207DF89BE749481ED4BD07E15FC268F",  // F-Droid
+            "FA8AA497194847D5715BAA62C6344D75A936EBA6" // Private
+        )
+
+        lateinit var instance: App
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+
+        instance = this
+    }
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
@@ -90,11 +106,4 @@ class EmulatorApplication : Application() {
         return String(hexChars)
     }
 
-    companion object {
-        private val VALID_SIGNATURES = arrayOf(
-            "78EF7758720A9902F731ED706F72C669C39B765C",  // GPlay
-            "289F84A32207DF89BE749481ED4BD07E15FC268F",  // F-Droid
-            "FA8AA497194847D5715BAA62C6344D75A936EBA6" // Private
-        )
-    }
 }

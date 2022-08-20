@@ -20,9 +20,9 @@
     <uses-feature android:name="android.hardware.location" android:required="false" />
 
 <!--    app.App-->
-<!--    .EmulatorApplication-->
+<!--    .App-->
     <application
-        android:name="app.EmulatorApplication"
+        android:name="app.App"
         android:allowBackup="false"
         android:appCategory="game"
         android:hasFragileUserData="true"

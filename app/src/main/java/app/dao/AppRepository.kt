@@ -2,7 +2,7 @@ package app.dao
 
 import android.content.Context
 import app.dao.AppDatabase.Companion.open
-import ru.playsoftware.j2meloader.applist.AppListModel
+import app.appsList.AppListModel
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +24,7 @@ import java.util.ArrayList
 class AppRepository(model: AppListModel) : OnSharedPreferenceChangeListener {
 
     private val context: Context
-    private val listLiveData = MutableLiveData<List<AppItem?>?>()
+    private val listLiveData = MutableLiveData<List<AppItem>?>()
     private val errorsLiveData = MutableLiveData<Throwable>()
     private val compositeDisposable = CompositeDisposable()
     private val errorObserver = ErrorObserver(errorsLiveData)
@@ -35,7 +35,7 @@ class AppRepository(model: AppListModel) : OnSharedPreferenceChangeListener {
 
         db = open(context, path!!)
         appItemDao = db!!.appItemDao()
-        val listConnectableFlowable = all!!
+        val listConnectableFlowable = getAll()
             .subscribeOn(Schedulers.io())
             .publish()
         compositeDisposable.add(listConnectableFlowable
@@ -46,7 +46,7 @@ class AppRepository(model: AppListModel) : OnSharedPreferenceChangeListener {
                     ArrayList(list)
                 )
             }) { value: Throwable -> errorsLiveData.postValue(value) })
-        compositeDisposable.add(listConnectableFlowable.subscribe({ value: List<AppItem?>? ->
+        compositeDisposable.add(listConnectableFlowable.subscribe({ value: List<AppItem>? ->
             listLiveData.postValue(
                 value
             )
@@ -54,12 +54,11 @@ class AppRepository(model: AppListModel) : OnSharedPreferenceChangeListener {
         compositeDisposable.add(listConnectableFlowable.connect())
     }
 
-    fun observeApps(owner: LifecycleOwner?, observer: Observer<List<AppItem?>?>?) {
+    fun observeApps(owner: LifecycleOwner?, observer: Observer<in List<AppItem>?>?) {
         listLiveData.observe(owner!!, observer!!)
     }
 
-    val all: Flowable<List<AppItem?>?>?
-        get() = appItemDao!!.getAll()
+    fun getAll(): Flowable<List<AppItem>> = appItemDao!!.getAll()
 
     fun insert(item: AppItem?) {
         Completable.fromAction { appItemDao!!.insert(item!!) }

@@ -23,8 +23,8 @@ import com.nononsenseapps.filepicker.Utils;
 import java.io.File;
 import java.util.Map;
 
-import ru.playsoftware.j2meloader.applist.AppListModel;
-import ru.playsoftware.j2meloader.applist.AppsListFragment;
+import app.appsList.AppListModel;
+import app.appsList.AppsListFragment;
 import ru.playsoftware.j2meloader.base.BaseActivity;
 import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.util.FileUtils;

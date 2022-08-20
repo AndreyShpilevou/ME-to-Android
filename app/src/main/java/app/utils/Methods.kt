@@ -10,12 +10,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import app.App
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 inline fun <reified T : Activity> Context.startActivity(vararg params: Pair<String, Any?>){
@@ -143,41 +143,41 @@ fun Switch.onCheckedChange(update: (v: View?, isChecked: Boolean) -> Unit){
     setOnCheckedChangeListener(update)
 }
 
-//val Int.dp : Int
-//    get() {
-//        return dp()
-//    }
+val Int.dp : Int
+    get() {
+        return dp()
+    }
 
-//fun Int.dp() : Int {
-//    return dpF().toInt()
-//}
-//
-//val Float.dp : Int
-//    get() {
-//        return dp()
-//    }
-//
-//fun Float.dp() : Int {
-//    return dpF().toInt()
-//}
-//
-//val Int.dpF : Float
-//    get() {
-//        return dpF()
-//    }
+fun Int.dp() : Int {
+    return dpF().toInt()
+}
 
-//fun Int.dpF() : Float {
-//    return toFloat().dpF()
-//}
-//
-//val Float.dpF : Float
-//    get() {
-//        return dpF()
-//    }
+val Float.dp : Int
+    get() {
+        return dp()
+    }
 
-//fun Float.dpF() : Float {
-//    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, App.instance.resources.displayMetrics)
-//}
+fun Float.dp() : Int {
+    return dpF().toInt()
+}
+
+val Int.dpF : Float
+    get() {
+        return dpF()
+    }
+
+fun Int.dpF() : Float {
+    return toFloat().dpF()
+}
+
+val Float.dpF : Float
+    get() {
+        return dpF()
+    }
+
+fun Float.dpF() : Float {
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, App.instance.resources.displayMetrics)
+}
 
 fun Activity.toast(str: String){
     Toast.makeText(this, str, Toast.LENGTH_LONG).show()
@@ -238,7 +238,7 @@ fun Activity.getExtrasChar(key: String, default: Char = ' ') =
 fun Activity.getExtrasCharArray(key: String) =
     intent.extras?.getCharArray(key) ?: emptyArray<Char>()
 
-fun Activity.getExtrasCharSequenceArray(key: String) =
+fun Activity.getExtrasCharSequenceArray(key: String): Array<CharSequence> =
     intent.extras?.getCharSequenceArray(key) ?: emptyArray<CharSequence>()
 
 fun Activity.getExtrasCharSequenceArrayList(key: String) =

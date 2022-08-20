@@ -1,4 +1,4 @@
-package ru.playsoftware.j2meloader.applist;
+package app.appsList;
 
 import android.app.Activity;
 import android.app.ActivityManager;

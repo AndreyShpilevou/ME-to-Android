@@ -9,13 +9,13 @@ import io.reactivex.Single
 interface AppItemDao {
 
     @RawQuery(observedEntities = [AppItem::class])
-    fun getAll(query: SupportSQLiteQuery): Flowable<List<AppItem?>?>?
+    fun getAll(query: SupportSQLiteQuery): Flowable<List<AppItem>>
 
     @Query("SELECT * FROM apps")
-    fun getAll() : Flowable<List<AppItem?>?>?
+    fun getAll() : Flowable<List<AppItem>>
 
     @RawQuery(observedEntities = [AppItem::class])
-    fun getAllSingle(query: SupportSQLiteQuery): Single<List<AppItem?>?>?
+    fun getAllSingle(query: SupportSQLiteQuery): Single<List<AppItem>>
 
     @Query("SELECT * FROM apps WHERE title = :name AND author = :vendor")
     operator fun get(name: String, vendor: String): AppItem?
