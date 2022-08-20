@@ -73,10 +73,10 @@ import androidx.core.widget.TextViewCompat;
 import ru.playsoftware.j2meloader.R;
 import app.activities.BaseActivity;
 import ru.playsoftware.j2meloader.settings.KeyMapperActivity;
-import ru.playsoftware.j2meloader.util.FileUtils;
+import app.utils.FileUtils;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
-import static ru.playsoftware.j2meloader.util.Constants.*;
+import static app.utils.Constants.*;
 
 public class ConfigActivity extends BaseActivity implements View.OnClickListener, ShaderTuneAlert.Callback {
 	private static final String TAG = ConfigActivity.class.getSimpleName();

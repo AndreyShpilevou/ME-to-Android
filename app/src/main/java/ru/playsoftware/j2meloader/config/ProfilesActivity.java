@@ -43,7 +43,7 @@ import androidx.preference.PreferenceManager;
 import ru.playsoftware.j2meloader.R;
 import app.activities.BaseActivity;
 
-import static ru.playsoftware.j2meloader.util.Constants.*;
+import static app.utils.Constants.*;
 
 public class ProfilesActivity extends BaseActivity implements EditNameAlert.Callback, AdapterView.OnItemClickListener {
 	private ProfilesAdapter adapter;

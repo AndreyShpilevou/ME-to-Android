@@ -6,7 +6,7 @@ import app.appsList.AppListModel
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import ru.playsoftware.j2meloader.util.AppUtils
+import app.utils.AppUtils
 import androidx.lifecycle.LifecycleOwner
 import io.reactivex.Flowable
 import io.reactivex.Completable
@@ -17,7 +17,7 @@ import androidx.preference.PreferenceManager
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
 import ru.playsoftware.j2meloader.config.Config
-import ru.playsoftware.j2meloader.util.Constants
+import app.utils.Constants
 import java.io.File
 import java.util.ArrayList
 

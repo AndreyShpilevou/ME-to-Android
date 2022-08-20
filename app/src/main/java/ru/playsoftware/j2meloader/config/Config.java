@@ -32,9 +32,9 @@ import androidx.preference.PreferenceManager;
 import ru.playsoftware.j2meloader.BuildConfig;
 import ru.playsoftware.j2meloader.R;
 
-import static ru.playsoftware.j2meloader.util.Constants.*;
+import static app.utils.Constants.*;
 
-import ru.playsoftware.j2meloader.util.FileUtils;
+import app.utils.FileUtils;
 
 public class Config {
 	public static final String DEX_OPT_CACHE_DIR = "dex_opt";

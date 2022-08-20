@@ -38,8 +38,8 @@ import javax.microedition.util.ContextHolder;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import ru.playsoftware.j2meloader.util.FileUtils;
-import ru.playsoftware.j2meloader.util.XmlUtils;
+import app.utils.FileUtils;
+import app.utils.XmlUtils;
 
 public class ProfilesManager {
 

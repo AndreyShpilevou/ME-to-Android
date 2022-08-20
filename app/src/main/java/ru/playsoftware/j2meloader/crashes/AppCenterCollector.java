@@ -52,7 +52,7 @@ import ru.playsoftware.j2meloader.crashes.models.ErrorLog;
 import ru.playsoftware.j2meloader.crashes.models.ExceptionModel;
 import ru.playsoftware.j2meloader.crashes.models.RequestBody;
 import ru.playsoftware.j2meloader.crashes.models.StackFrame;
-import ru.playsoftware.j2meloader.util.Constants;
+import app.utils.Constants;
 
 @AutoService(Collector.class)
 public class AppCenterCollector implements Collector {

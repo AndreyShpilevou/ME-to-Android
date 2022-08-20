@@ -20,7 +20,6 @@ package javax.microedition.shell;
 import android.util.Log;
 
 import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
 
 import java.io.ByteArrayInputStream;
@@ -32,8 +31,8 @@ import java.io.InputStream;
 import dalvik.system.DexClassLoader;
 import ru.playsoftware.j2meloader.BuildConfig;
 import ru.playsoftware.j2meloader.config.Config;
-import ru.playsoftware.j2meloader.util.FileUtils;
-import ru.playsoftware.j2meloader.util.IOUtils;
+import app.utils.FileUtils;
+import app.utils.IOUtils;
 
 public class AppClassLoader extends DexClassLoader {
 	private static final String TAG = AppClassLoader.class.getName();

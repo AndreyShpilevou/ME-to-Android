@@ -47,9 +47,9 @@ import io.reactivex.SingleEmitter;
 import app.dao.AppItem;
 import app.dao.AppRepository;
 import ru.playsoftware.j2meloader.config.Config;
-import ru.playsoftware.j2meloader.util.ConverterException;
-import ru.playsoftware.j2meloader.util.FileUtils;
-import ru.playsoftware.j2meloader.util.ZipUtils;
+import app.utils.ConverterException;
+import app.utils.FileUtils;
+import app.utils.ZipUtils;
 import ru.woesss.j2me.jar.Descriptor;
 
 public class AppInstaller {

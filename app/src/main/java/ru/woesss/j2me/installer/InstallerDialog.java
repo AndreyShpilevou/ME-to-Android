@@ -48,7 +48,7 @@ import app.dao.AppItem;
 import app.appsList.AppListModel;
 import app.dao.AppRepository;
 import ru.playsoftware.j2meloader.config.Config;
-import ru.playsoftware.j2meloader.util.FileUtils;
+import app.utils.FileUtils;
 import ru.woesss.j2me.jar.Descriptor;
 
 public class InstallerDialog extends DialogFragment {

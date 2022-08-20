@@ -65,9 +65,9 @@ import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.config.ProfileModel;
 import ru.playsoftware.j2meloader.config.ProfilesManager;
 import ru.playsoftware.j2meloader.config.ShaderInfo;
-import ru.playsoftware.j2meloader.util.Constants;
-import ru.playsoftware.j2meloader.util.FileUtils;
-import ru.playsoftware.j2meloader.util.IOUtils;
+import app.utils.Constants;
+import app.utils.FileUtils;
+import app.utils.IOUtils;
 import ru.woesss.j2me.jar.Descriptor;
 
 public class MicroLoader {

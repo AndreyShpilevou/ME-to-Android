@@ -62,9 +62,11 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
 
     fun setItem(item: AppItem){
 
-        Drawable.createFromPath(item.imagePathExt)?.let{ icon ->
+        Drawable.createFromPath(item.imagePathExt)?.also{ icon ->
             icon.isFilterBitmap = false
-            iconView.setImageDrawable(icon)
+            iconView.imageDrawable = icon
+        } ?: let {
+            iconView.imageResources = R.mipmap.ic_launcher
         }
 
         titleView.text = item.title

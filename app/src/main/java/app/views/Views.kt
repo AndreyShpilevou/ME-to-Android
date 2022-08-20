@@ -2,6 +2,7 @@ package app.views
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -273,6 +274,12 @@ var ImageView.imageResources: Int
     get() = 0
     set(value) {
         setImageResource(value)
+    }
+
+var ImageView.imageDrawable: Drawable?
+    get() = null
+    set(value) {
+        setImageDrawable(value)
     }
 
 var View.backgroundResources: Int

@@ -47,7 +47,7 @@ import ru.playsoftware.j2meloader.R;
 import app.activities.BaseActivity;
 import ru.playsoftware.j2meloader.config.ProfileModel;
 import ru.playsoftware.j2meloader.config.ProfilesManager;
-import ru.playsoftware.j2meloader.util.SparseIntArrayAdapter;
+import app.utils.SparseIntArrayAdapter;
 
 public class KeyMapperActivity extends BaseActivity implements View.OnClickListener {
 	private static final String KEY_SAVE = "KEY_MAP_SAVE";

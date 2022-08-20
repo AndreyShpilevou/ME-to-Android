@@ -19,7 +19,6 @@ package ru.playsoftware.j2meloader.config;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,7 +36,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.preference.PreferenceManager;
 import ru.playsoftware.j2meloader.R;
 
-import static ru.playsoftware.j2meloader.util.Constants.*;
+import static app.utils.Constants.*;
 
 public class LoadProfileAlert extends DialogFragment {
 	private ArrayList<Profile> profiles;

@@ -18,7 +18,7 @@
 
 package javax.microedition.shell;
 
-import static ru.playsoftware.j2meloader.util.Constants.*;
+import static app.utils.Constants.*;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -34,7 +34,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
-import android.util.SparseBooleanArray;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -48,7 +47,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -64,7 +62,6 @@ import org.acra.ACRA;
 import org.acra.ErrorReporter;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -84,7 +81,7 @@ import io.reactivex.disposables.Disposable;
 import ru.playsoftware.j2meloader.BuildConfig;
 import ru.playsoftware.j2meloader.R;
 import ru.playsoftware.j2meloader.config.Config;
-import ru.playsoftware.j2meloader.util.Constants;
+import app.utils.Constants;
 
 public class MicroActivity extends AppCompatActivity {
 	private static final int ORIENTATION_DEFAULT = 0;

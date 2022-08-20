@@ -20,7 +20,7 @@ import java.io.File;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import ru.playsoftware.j2meloader.util.FileUtils;
+import app.utils.FileUtils;
 
 public class Profile implements Comparable<Profile> {
 

@@ -113,6 +113,12 @@
                 <data android:pathPattern=".*..*..*..*.KJX" />
             </intent-filter>
         </activity>
+
+<!--        <activity-->
+<!--            android:name="app.activities.filesManager.FilteredFilePickerActivity"-->
+<!--            android:exported="false"-->
+<!--            android:theme="@style/FilePickerTheme" />-->
+
         <activity
             android:name=".config.ConfigActivity"
             android:exported="true"
@@ -131,11 +137,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".settings.KeyMapperActivity" android:exported="false" />
-        <activity
-            android:name=".filepicker.FilteredFilePickerActivity"
-            android:exported="false"
-            android:theme="@style/FilePickerTheme" />
+
         <activity android:name=".config.ProfilesActivity" android:exported="false" />
 
         <provider
@@ -145,7 +149,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/nnf_provider_paths" />
+                android:resource="@xml/provider_paths" />
         </provider>
         <activity android:name="com.nokia.mid.ui.NotificationActivity" />
     </application>

@@ -36,16 +36,14 @@ import ru.playsoftware.j2meloader.R
 import ru.playsoftware.j2meloader.config.Config
 import ru.playsoftware.j2meloader.config.ConfigActivity
 import ru.playsoftware.j2meloader.config.ProfilesActivity
-import ru.playsoftware.j2meloader.filepicker.FilteredFilePickerFragment
 import ru.playsoftware.j2meloader.info.AboutDialogFragment
 import ru.playsoftware.j2meloader.info.HelpDialogFragment
 import ru.playsoftware.j2meloader.settings.SettingsActivity
-import ru.playsoftware.j2meloader.util.AppUtils
-import ru.playsoftware.j2meloader.util.Constants
-import ru.playsoftware.j2meloader.util.FileUtils
+import app.utils.AppUtils
+import app.utils.Constants
+import app.utils.FileUtils
 import ru.woesss.j2me.installer.InstallerDialog
 import java.io.File
-
 
 class AppsListFragment : Fragment() {
 
@@ -167,9 +165,9 @@ class AppsListFragment : Fragment() {
         if (uri == null) {
             return
         }
-        preferences!!.edit()
-            .putString(Constants.PREF_LAST_PATH, FilteredFilePickerFragment.getLastPath())
-            .apply()
+//        preferences!!.edit()
+//            .putString(Constants.PREF_LAST_PATH, FilteredFilePickerFragment.getLastPath())
+//            .apply()
         InstallerDialog.newInstance(uri).show(parentFragmentManager, "installer")
     }
 

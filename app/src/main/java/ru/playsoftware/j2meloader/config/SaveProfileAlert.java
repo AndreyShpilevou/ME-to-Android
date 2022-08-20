@@ -19,7 +19,6 @@ package ru.playsoftware.j2meloader.config;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -36,8 +35,8 @@ import java.io.IOException;
 
 import ru.playsoftware.j2meloader.R;
 
-import static ru.playsoftware.j2meloader.util.Constants.KEY_CONFIG_PATH;
-import static ru.playsoftware.j2meloader.util.Constants.PREF_DEFAULT_PROFILE;
+import static app.utils.Constants.KEY_CONFIG_PATH;
+import static app.utils.Constants.PREF_DEFAULT_PROFILE;
 
 public class SaveProfileAlert extends DialogFragment {
 

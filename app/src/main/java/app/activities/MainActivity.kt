@@ -2,7 +2,6 @@ package app.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.media.AudioManager
@@ -15,14 +14,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import com.nononsenseapps.filepicker.Utils
 import ru.playsoftware.j2meloader.R
 import app.appsList.AppListModel
 import app.appsList.AppsListFragment
 import ru.playsoftware.j2meloader.config.Config
-import ru.playsoftware.j2meloader.util.Constants
-import ru.playsoftware.j2meloader.util.FileUtils
-import ru.playsoftware.j2meloader.util.PickDirResultContract
+import app.utils.Constants
+import app.utils.FileUtils
 import ru.woesss.j2me.installer.InstallerDialog
 import java.io.File
 
@@ -35,13 +32,6 @@ class MainActivity : BaseActivity() {
                 status
             )
         }
-    private val openDirLauncher = registerForActivityResult(
-        PickDirResultContract()
-    ) { uri: Uri? ->
-        onPickDirResult(
-            uri
-        )
-    }
 
     private lateinit var preferences: SharedPreferences
     private lateinit var appListModel: AppListModel
@@ -104,7 +94,6 @@ class MainActivity : BaseActivity() {
             .setCancelable(false)
             .setMessage(getString(R.string.create_apps_dir_failed, emulatorDir))
             .setNegativeButton(R.string.exit) { d, w -> finish() }
-            .setPositiveButton(R.string.choose) { d, w -> openDirLauncher.launch(null) }
             .show()
     }
 
@@ -148,7 +137,7 @@ class MainActivity : BaseActivity() {
             checkAndCreateDirs()
             return
         }
-        val file = Utils.getFileForUri(uri)
+        val file = FileUtils.getFileForUri(uri)
         applyWorkDir(file)
     }
 
@@ -162,13 +151,6 @@ class MainActivity : BaseActivity() {
             .setCancelable(false)
             .setMessage(msg)
             .setPositiveButton(R.string.create) { d, w -> applyWorkDir(File(emulatorDir)) }
-            .setNeutralButton(
-                lblChange
-            ) { d: DialogInterface?, w: Int ->
-                openDirLauncher.launch(
-                    emulatorDir
-                )
-            }
             .setNegativeButton(R.string.exit) { d, w -> finish() }
             .show()
     }

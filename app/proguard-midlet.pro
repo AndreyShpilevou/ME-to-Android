@@ -16,7 +16,7 @@
 #   public *;
 #}
 -keep public class org.microemu.** { public protected *; }
--keep class ru.playsoftware.j2meloader.util.SparseIntArrayAdapter { *; }
+-keep class app.utils.SparseIntArrayAdapter { *; }
 # Keep the BuildConfig
 -keep class ru.playsoftware.j2meloader.BuildConfig { *; }
 

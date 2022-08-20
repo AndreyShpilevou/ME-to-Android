@@ -29,7 +29,7 @@ import java.util.Arrays;
 import javax.microedition.shell.AppClassLoader;
 import javax.microedition.util.ContextHolder;
 
-import ru.playsoftware.j2meloader.util.FileUtils;
+import app.utils.FileUtils;
 
 public class File {
 	public static final int INSIDE_STORAGE_PATH = 1;

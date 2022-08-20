@@ -26,7 +26,7 @@ import java.io.File;
 import javax.microedition.lcdui.keyboard.VirtualKeyboard;
 import javax.microedition.util.ContextHolder;
 
-import ru.playsoftware.j2meloader.util.SparseIntArrayAdapter;
+import app.utils.SparseIntArrayAdapter;
 
 public class ProfileModel {
 	public static final int VERSION = 3;

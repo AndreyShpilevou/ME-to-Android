@@ -26,7 +26,7 @@ import javax.microedition.lcdui.ViewHandler;
 import javax.microedition.util.ContextHolder;
 
 import ru.playsoftware.j2meloader.config.ShaderInfo;
-import ru.playsoftware.j2meloader.util.FileUtils;
+import app.utils.FileUtils;
 
 import static android.opengl.GLES20.*;
 

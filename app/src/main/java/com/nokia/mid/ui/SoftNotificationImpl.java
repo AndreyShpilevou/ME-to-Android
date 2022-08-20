@@ -35,7 +35,7 @@ import javax.microedition.shell.MicroActivity;
 import javax.microedition.util.ContextHolder;
 
 import ru.playsoftware.j2meloader.R;
-import ru.playsoftware.j2meloader.util.PNGUtils;
+import app.utils.PNGUtils;
 
 public class SoftNotificationImpl extends SoftNotification {
 	@SuppressLint("StaticFieldLeak")

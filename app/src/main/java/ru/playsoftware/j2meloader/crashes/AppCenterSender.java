@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ru.playsoftware.j2meloader.config.Config;
-import ru.playsoftware.j2meloader.util.Constants;
+import app.utils.Constants;
 
 public class AppCenterSender implements ReportSender {
 	private static final String TAG = AppCenterSender.class.getName();

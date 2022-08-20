@@ -18,7 +18,7 @@ import javax.microedition.util.ContextHolder;
 
 import app.dao.AppItem;
 import ru.playsoftware.j2meloader.config.Config;
-import ru.playsoftware.j2meloader.util.AppUtils;
+import app.utils.AppUtils;
 
 public abstract class MIDlet {
 
