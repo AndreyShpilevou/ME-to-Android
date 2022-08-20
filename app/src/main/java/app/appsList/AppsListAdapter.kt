@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import app.dao.AppItem
 import app.utils.onClick
 import app.utils.onLongClick
-import app.views.AppItemView
 
 class AppsListAdapter : RecyclerView.Adapter<AppsListAdapter.ViewHolder>() {
 

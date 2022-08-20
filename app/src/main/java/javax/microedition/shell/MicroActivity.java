@@ -85,7 +85,6 @@ import ru.playsoftware.j2meloader.BuildConfig;
 import ru.playsoftware.j2meloader.R;
 import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.util.Constants;
-import ru.playsoftware.j2meloader.util.LogUtils;
 
 public class MicroActivity extends AppCompatActivity {
 	private static final int ORIENTATION_DEFAULT = 0;
@@ -453,8 +452,6 @@ public class MicroActivity extends AppCompatActivity {
 		int id = item.getItemId();
 		if (id == R.id.action_exit_midlet) {
 			showExitConfirmation();
-		} else if (id == R.id.action_save_log) {
-			saveLog();
 		} else if (id == R.id.action_lock_orientation) {
 			if (item.isChecked()) {
 				VirtualKeyboard vk = ContextHolder.getVk();
@@ -517,16 +514,6 @@ public class MicroActivity extends AppCompatActivity {
 				Toast.makeText(MicroActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
 			}
 		});
-	}
-
-	private void saveLog() {
-		try {
-			LogUtils.writeLog();
-			Toast.makeText(this, R.string.log_saved, Toast.LENGTH_SHORT).show();
-		} catch (IOException e) {
-			e.printStackTrace();
-			Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
-		}
 	}
 
 	private void showHideButtonDialog() {

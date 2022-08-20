@@ -24,6 +24,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -42,18 +43,17 @@ import ru.playsoftware.j2meloader.settings.SettingsActivity
 import ru.playsoftware.j2meloader.util.AppUtils
 import ru.playsoftware.j2meloader.util.Constants
 import ru.playsoftware.j2meloader.util.FileUtils
-import ru.playsoftware.j2meloader.util.LogUtils
 import ru.woesss.j2me.installer.InstallerDialog
 import java.io.File
-import java.io.IOException
 
 
 class AppsListFragment : Fragment() {
 
+    private lateinit var emptyView: View
+
     private lateinit var recyclerView: RecyclerView
     private val recyclerViewAdapter = AppsListAdapter()
 
-    //private val adapter = AppsListAdapter()
     private var appUri: Uri? = null
     private var preferences: SharedPreferences? = null
     private var appRepository: AppRepository? = null
@@ -85,9 +85,7 @@ class AppsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //registerForContextMenu(listView)
         setHasOptionsMenu(true)
-        //listAdapter = adapter
 
         val fab = view.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
@@ -100,6 +98,8 @@ class AppsListFragment : Fragment() {
             }
             openFileLauncher.launch(path)
         }
+
+        emptyView = view.findViewById(R.id.empty_view)
 
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.adapter = recyclerViewAdapter
@@ -142,23 +142,12 @@ class AppsListFragment : Fragment() {
                 }
                 false
             }
-//        popupMenu.setOnDismissListener {
-//            Toast.makeText(
-//                view.context, "onDismiss",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//        }
         popupMenu.show()
 
         if (!File(appItem.pathExt + Config.MIDLET_RES_FILE).exists()) {
             popupMenu.menu.findItem(R.id.action_context_reinstall).isVisible = false
         }
     }
-
-
-
-
-
 
     private fun alertDbError(throwable: Throwable) {
         val activity: Activity? = activity
@@ -185,7 +174,7 @@ class AppsListFragment : Fragment() {
     }
 
     private fun alertRename(id: Int) {
-        val item = recyclerViewAdapter.getItem(id) //adapter.getItem(id)
+        val item = recyclerViewAdapter.getItem(id)
         val activity = requireActivity()
         val editText = EditText(activity)
         editText.setText(item.title)
@@ -228,51 +217,6 @@ class AppsListFragment : Fragment() {
             .setNegativeButton(android.R.string.cancel, null)
         builder.show()
     }
-
-//    override fun onCreateContextMenu(
-//        menu: ContextMenu, v: View,
-//        menuInfo: ContextMenuInfo?
-//    ) {
-//        super.onCreateContextMenu(menu, v, menuInfo)
-//        val inflater = requireActivity().menuInflater
-//        inflater.inflate(R.menu.context_main, menu)
-//        if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
-//            menu.findItem(R.id.action_context_shortcut).isVisible = false
-//        }
-//        val info = menuInfo as AdapterContextMenuInfo?
-//        val index = info!!.position
-//        val appItem = recyclerViewAdapter.getItem(index)
-//        if (!File(appItem.pathExt + Config.MIDLET_RES_FILE).exists()) {
-//            menu.findItem(R.id.action_context_reinstall).isVisible = false
-//        }
-//    }
-
-//    override fun onContextItemSelected(item: MenuItem): Boolean {
-//        val info = item.menuInfo as AdapterContextMenuInfo
-//        val index = info.position
-//        val appItem = recyclerViewAdapter.getItem(index)
-//        when (item.itemId) {
-//            R.id.action_context_shortcut -> {
-//                requestAddShortcut(appItem)
-//            }
-//            R.id.action_context_rename -> {
-//                alertRename(index)
-//            }
-//            R.id.action_context_settings -> {
-//                Config.startApp(requireActivity(), appItem.title, appItem.pathExt, true)
-//            }
-//            R.id.action_context_reinstall -> {
-//                InstallerDialog.newInstance(appItem.id).show(parentFragmentManager, "installer")
-//            }
-//            R.id.action_context_delete -> {
-//                alertDelete(appItem)
-//            }
-//            else -> {
-//                return super.onContextItemSelected(item)
-//            }
-//        }
-//        return true
-//    }
 
     private fun requestAddShortcut(appItem: AppItem) {
         val activity = requireActivity()
@@ -337,14 +281,6 @@ class AppsListFragment : Fragment() {
         } else if (itemId == R.id.action_help) {
             val helpDialogFragment = HelpDialogFragment()
             helpDialogFragment.show(childFragmentManager, "help")
-        } else if (itemId == R.id.action_save_log) {
-            try {
-                LogUtils.writeLog()
-                Toast.makeText(activity, R.string.log_saved, Toast.LENGTH_SHORT).show()
-            } catch (e: IOException) {
-                e.printStackTrace()
-                Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show()
-            }
         } else if (itemId == R.id.action_exit_app) {
             activity.finish()
         }
@@ -354,6 +290,8 @@ class AppsListFragment : Fragment() {
     private fun onDbUpdated(items: List<AppItem>) {
 
         recyclerViewAdapter.setItems(items)
+
+        emptyView.isVisible = items.isEmpty()
 
         if (appUri != null) {
             InstallerDialog.newInstance(appUri).show(parentFragmentManager, "installer")

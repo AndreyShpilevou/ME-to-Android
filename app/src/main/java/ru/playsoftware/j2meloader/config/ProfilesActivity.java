@@ -41,7 +41,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.preference.PreferenceManager;
 
 import ru.playsoftware.j2meloader.R;
-import ru.playsoftware.j2meloader.base.BaseActivity;
+import app.activities.BaseActivity;
 
 import static ru.playsoftware.j2meloader.util.Constants.*;
 

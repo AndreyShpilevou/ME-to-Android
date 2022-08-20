@@ -14,13 +14,13 @@
         <item name="textColorSecondary">@color/text_secondary</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
 
-        <item name="android:textViewStyle">@style/AppTheme.TextViewStyle</item>
+<!--        <item name="android:textViewStyle">@style/AppTheme.TextViewStyle</item>-->
 
     </style>
 
-    <style name="AppTheme.TextViewStyle" parent="@style/Widget.AppCompat.TextView">
-        <item name="android:textColor">#000000</item>
-    </style>
+<!--    <style name="AppTheme.TextViewStyle" parent="@style/Widget.AppCompat.TextView">-->
+<!--        <item name="android:textColor">#000000</item>-->
+<!--    </style>-->
 
 
     <style name="AppTheme.NoActionBar">

@@ -19,7 +19,6 @@ import com.nononsenseapps.filepicker.Utils
 import ru.playsoftware.j2meloader.R
 import app.appsList.AppListModel
 import app.appsList.AppsListFragment
-import ru.playsoftware.j2meloader.base.BaseActivity
 import ru.playsoftware.j2meloader.config.Config
 import ru.playsoftware.j2meloader.util.Constants
 import ru.playsoftware.j2meloader.util.FileUtils

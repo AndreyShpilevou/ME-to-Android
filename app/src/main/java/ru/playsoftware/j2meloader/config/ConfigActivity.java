@@ -71,7 +71,7 @@ import androidx.preference.PreferenceManager;
 import androidx.core.widget.TextViewCompat;
 
 import ru.playsoftware.j2meloader.R;
-import ru.playsoftware.j2meloader.base.BaseActivity;
+import app.activities.BaseActivity;
 import ru.playsoftware.j2meloader.settings.KeyMapperActivity;
 import ru.playsoftware.j2meloader.util.FileUtils;
 import yuku.ambilwarna.AmbilWarnaDialog;
