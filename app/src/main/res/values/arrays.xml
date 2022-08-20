@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="pref_theme_entries" tools:ignore="InconsistentArrays">
+        <item>@string/pref_theme_light</item>
+        <item>@string/pref_theme_night</item>
+        <item>@string/pref_theme_auto_time</item>
+    </string-array>
+    <string-array name="pref_theme_values" translatable="false" tools:ignore="InconsistentArrays">
+        <item>light</item>
+        <item>dark</item>
+        <item>auto-time</item>
+    </string-array>
+    <string-array name="PREF_ORIENTATION_ENTRIES" tools:ignore="ExtraTranslation">
+        <item>@string/pref_orientation_default</item>
+        <item>@string/pref_orientation_auto</item>
+        <item>@string/pref_orientation_port</item>
+        <item>@string/pref_orientation_land</item>
+    </string-array>
     <string-array name="PREF_VK_TYPE_ENTRIES">
         <item>@string/pref_vk_type_custom</item>
         <item>@string/pref_vk_type_phone</item>

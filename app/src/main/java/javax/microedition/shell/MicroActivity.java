@@ -91,8 +91,6 @@ public class MicroActivity extends AppCompatActivity {
 
 	private Displayable current;
 	private boolean visible;
-	private boolean actionBarEnabled;
-	private boolean statusBarEnabled;
 	private FrameLayout layout;
 	private Toolbar toolbar;
 	private MicroLoader microLoader;
@@ -113,8 +111,6 @@ public class MicroActivity extends AppCompatActivity {
 		toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		actionBarEnabled = sp.getBoolean(PREF_TOOLBAR, false);
-		statusBarEnabled = sp.getBoolean(PREF_STATUSBAR, false);
 		if (sp.getBoolean(PREF_KEEP_SCREEN, false)) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
@@ -218,10 +214,6 @@ public class MicroActivity extends AppCompatActivity {
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		if (hasFocus && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
-				current instanceof Canvas) {
-			hideSystemUI();
-		}
 	}
 
 	@SuppressLint("SourceLockedOrientationActivity")
@@ -298,20 +290,6 @@ public class MicroActivity extends AppCompatActivity {
 		return toolBarHeight;
 	}
 
-	private void hideSystemUI() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			int flags = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-			if (!statusBarEnabled) {
-				flags |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-						| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN;
-			}
-			getWindow().getDecorView().setSystemUiVisibility(flags);
-		} else if (!statusBarEnabled) {
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-					WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		}
-	}
-
 	private void showSystemUI() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
@@ -370,10 +348,6 @@ public class MicroActivity extends AppCompatActivity {
 
 	@Override
 	public void openOptionsMenu() {
-		if (!actionBarEnabled &&
-				Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && current instanceof Canvas) {
-			showSystemUI();
-		}
 		super.openOptionsMenu();
 	}
 
@@ -415,10 +389,6 @@ public class MicroActivity extends AppCompatActivity {
 		inflater.inflate(R.menu.midlet_displayable, menu);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
 			menu.findItem(R.id.action_lock_orientation).setVisible(true);
-		}
-		if (actionBarEnabled) {
-			menu.findItem(R.id.action_ime_keyboard).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-			menu.findItem(R.id.action_take_screenshot).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		}
 		if (inputMethodManager == null) {
 			menu.findItem(R.id.action_ime_keyboard).setVisible(false);
@@ -651,15 +621,10 @@ public class MicroActivity extends AppCompatActivity {
 			LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar.getLayoutParams();
 			int toolbarHeight = 0;
 			if (next instanceof Canvas) {
-				hideSystemUI();
-				if (!actionBarEnabled) {
-					actionBar.hide();
-				} else {
-					final String title = next.getTitle();
-					actionBar.setTitle(title == null ? appName : title);
-					toolbarHeight = (int) (getToolBarHeight() / 1.5);
-					layoutParams.height = toolbarHeight;
-				}
+				final String title = next.getTitle();
+				actionBar.setTitle(title == null ? appName : title);
+				toolbarHeight = (int) (getToolBarHeight() / 1.5);
+				layoutParams.height = toolbarHeight;
 			} else {
 				showSystemUI();
 				actionBar.show();

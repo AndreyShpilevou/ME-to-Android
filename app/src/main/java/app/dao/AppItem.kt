@@ -8,12 +8,22 @@ import ru.playsoftware.j2meloader.R
 import ru.playsoftware.j2meloader.config.Config
 
 @Entity(tableName = "apps", indices = [Index(value = ["path"], unique = true)])
-class AppItem(val path: String, var title: String, val author: String, val version: String) {
+data class AppItem(
+    val path: String,
+    var title: String,
+    val author: String,
+    val version: String
+    ) {
+
     @PrimaryKey(autoGenerate = true)
     var id = 0
     var imagePath: String? = null
-    val pathExt: String
-        get() = Config.getAppDir() + path
+    var displayName: String? = null
+
+
+    fun getDisplayTitle() = displayName ?: title
+
+    fun getPathExt() = Config.getAppDir() + path
 
     fun setImagePathExt(imagePath: String) {
         var imagePath = imagePath
@@ -23,10 +33,7 @@ class AppItem(val path: String, var title: String, val author: String, val versi
         this.imagePath = path + imagePath
     }
 
-    val imagePathExt: String?
-        get() = if (imagePath == null) {
-            null
-        } else Config.getAppDir() + imagePath
+    fun getImagePathExt() = if (imagePath == null) null else Config.getAppDir() + imagePath
 
     fun getAuthorExt(context: Context): String {
         return context.getString(R.string.author) + author

@@ -12,9 +12,6 @@ object Constants {
     const val PREF_EMULATOR_DIR = "emulator_dir"
     const val PREF_KEEP_SCREEN = "pref_wakelock_switch"
     const val PREF_LAST_PATH = "pref_last_path"
-    const val PREF_STATUSBAR = "pref_statusbar_switch"
-    const val PREF_TOOLBAR = "pref_actionbar_switch"
     const val PREF_VIBRATION = "pref_vibration_switch"
     const val PREF_SCREENSHOT_SWITCH = "pref_screenshot_switch"
-    const val PREF_STORAGE_WARNING_SHOWN = "pref_storage_warning_shown"
 }

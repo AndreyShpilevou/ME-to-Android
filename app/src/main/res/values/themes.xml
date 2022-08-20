@@ -81,4 +81,24 @@
     <style name="TextViewVendor" parent="Widget.AppCompat.TextView" >
     </style>
 
+
+
+
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+
+<!--        <item name="android:textViewStyle">@style/Xmarka.textViewStyle</item>-->
+<!--        <item name="android:buttonStyle">@style/Xmarka.buttonStyle</item>-->
+<!--        <item name="android:editTextStyle">@style/Xmarka.editTextStyle</item>-->
+<!--        <item name="android:checkboxStyle">@style/Xmarka.checkBoxStyle</item>-->
+    </style>
+
 </resources>

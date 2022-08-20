@@ -19,8 +19,6 @@
     <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
     <uses-feature android:name="android.hardware.location" android:required="false" />
 
-<!--    app.App-->
-<!--    .App-->
     <application
         android:name="app.App"
         android:allowBackup="false"
@@ -38,10 +36,6 @@
         tools:targetApi="r"
         tools:ignore="RtlEnabled">
 
-<!--        <activity android:name=".MainActivity"></activity>-->
-
-<!--        app.activities.StartActivity-->
-<!--        app.activities.MainActivity-->
         <activity
             android:name="app.activities.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
@@ -113,11 +107,6 @@
                 <data android:pathPattern=".*..*..*..*.KJX" />
             </intent-filter>
         </activity>
-
-<!--        <activity-->
-<!--            android:name="app.activities.filesManager.FilteredFilePickerActivity"-->
-<!--            android:exported="false"-->
-<!--            android:theme="@style/FilePickerTheme" />-->
 
         <activity
             android:name=".config.ConfigActivity"

@@ -137,7 +137,7 @@ static def getDate() {
 
 dependencies {
     def roomVersion = '2.4.3'
-    def cameraxVersion = "1.1.0-beta03"
+    def cameraxVersion = "1.1.0"
     def autoServiceVersion = "1.0"
 
     implementation project(':dexlib')
@@ -178,7 +178,6 @@ dependencies {
     implementation "androidx.camera:camera-view:${cameraxVersion}"
 
     // Android UI
-    //implementation 'com.github.nikita36078:filepicker:4.3.0'
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
 
     // Testing && CrashReports

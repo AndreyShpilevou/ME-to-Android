@@ -101,7 +101,7 @@ object AppUtils {
     }
 
     fun deleteApp(item: AppItem) {
-        val appDir = File(item.pathExt)
+        val appDir = File(item.getPathExt())
         FileUtils.deleteDirectory(appDir)
         val appSaveDir = File(Config.getDataDir(), item.path)
         FileUtils.deleteDirectory(appSaveDir)
@@ -138,7 +138,7 @@ object AppUtils {
     }
 
     fun getIconBitmap(appItem: AppItem): Bitmap? {
-        val file = appItem.imagePathExt ?: return null
+        val file = appItem.getImagePathExt() ?: return null
         return BitmapFactory.decodeFile(file)
     }
 }

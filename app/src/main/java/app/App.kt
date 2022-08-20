@@ -13,6 +13,7 @@ import android.content.Context
 import android.os.Build
 import android.content.pm.PackageManager
 import android.content.pm.Signature
+import app.dao.AppRepository
 import ru.playsoftware.j2meloader.BuildConfig
 import ru.playsoftware.j2meloader.R
 import java.security.MessageDigest
@@ -29,12 +30,14 @@ class App : Application() {
         )
 
         lateinit var instance: App
+
     }
 
     override fun onCreate() {
         super.onCreate()
 
         instance = this
+
     }
 
     override fun attachBaseContext(base: Context) {

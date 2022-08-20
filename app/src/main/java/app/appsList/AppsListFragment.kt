@@ -31,17 +31,17 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import app.dao.AppItem
 import app.dao.AppRepository
+import app.dialogs.AppCardBottomDialog
+import app.dialogs.LicensesBottomDialog
+import app.utils.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.playsoftware.j2meloader.R
 import ru.playsoftware.j2meloader.config.Config
 import ru.playsoftware.j2meloader.config.ConfigActivity
 import ru.playsoftware.j2meloader.config.ProfilesActivity
-import ru.playsoftware.j2meloader.info.AboutDialogFragment
-import ru.playsoftware.j2meloader.info.HelpDialogFragment
 import ru.playsoftware.j2meloader.settings.SettingsActivity
-import app.utils.AppUtils
-import app.utils.Constants
-import app.utils.FileUtils
+import app.views.*
+import app.views.anko.CustomFrameLayout
 import ru.woesss.j2me.installer.InstallerDialog
 import java.io.File
 
@@ -54,7 +54,8 @@ class AppsListFragment : Fragment() {
 
     private var appUri: Uri? = null
     private var preferences: SharedPreferences? = null
-    private var appRepository: AppRepository? = null
+
+    private lateinit var appRepository: AppRepository
 
     private val openFileLauncher = registerForActivityResult(
         FileUtils.getFilePicker()
@@ -71,81 +72,96 @@ class AppsListFragment : Fragment() {
 
         val appListModel = ViewModelProvider(requireActivity())[AppListModel::class.java]
         appRepository = appListModel.appRepository
-        appRepository!!.observeErrors(this) { throwable: Throwable -> alertDbError(throwable) }
-        appRepository!!.observeApps(this) { items: List<AppItem> -> onDbUpdated(items) }
+        appRepository.observeErrors(this) { throwable: Throwable -> alertDbError(throwable) }
+        appRepository.observeApps(this) { items: List<AppItem> -> onDbUpdated(items) }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_appslist, container, false)
-    }
+    ) = CustomFrameLayout(requireContext()).apply {
+
+            recyclerView = customView<AppsRecyclerView> {
+                setPadding(6.dp, 6.dp, 6.dp, 100.dp)
+                clipToPadding = false
+            }.lparams(matchParent, matchParent)
+
+            emptyView = textView {
+                text = "no_data_for_display"
+            }.lparams(wrapContent, wrapContent){
+                gravity = Gravity.CENTER
+            }
+
+            customView<FloatingActionButton> {
+                imageResources = R.drawable.ic_add_white
+            }.lparams(wrapContent, wrapContent){
+                gravity = Gravity.RIGHT or Gravity.BOTTOM
+                setMargins(0, 0, 16.dp, 16.dp)
+            }.onClick {
+                var path = preferences!!.getString(Constants.PREF_LAST_PATH, null)
+                if (path == null) {
+                    val dir = Environment.getExternalStorageDirectory()
+                    if (dir.canRead()) {
+                        path = dir.absolutePath
+                    }
+                }
+                openFileLauncher.launch(path)
+            }
+
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        val fab = view.findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener {
-            var path = preferences!!.getString(Constants.PREF_LAST_PATH, null)
-            if (path == null) {
-                val dir = Environment.getExternalStorageDirectory()
-                if (dir.canRead()) {
-                    path = dir.absolutePath
-                }
-            }
-            openFileLauncher.launch(path)
-        }
-
-        emptyView = view.findViewById(R.id.empty_view)
-
-        recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.adapter = recyclerViewAdapter
         recyclerViewAdapter.control = object : AppsListAdapter.Control{
+
             override fun onClickItem(position: Int) {
                 val item = recyclerViewAdapter.getItem(position)
-                Config.startApp(requireActivity(), item.title, item.pathExt, false)
+                Config.startApp(requireActivity(), item.getDisplayTitle(), item.getPathExt(), false)
             }
 
             override fun onLongClickItem(position: Int, view: View) {
-                showPopupMenu(position, view)
-            }
+                //showPopupMenu(position, view)
 
+                val appItem = recyclerViewAdapter.getItem(position)
+                AppCardBottomDialog(requireActivity(), appRepository, appItem).show()
+            }
         }
     }
 
-    private fun showPopupMenu(position: Int, view: View) {
-
-        val appItem = recyclerViewAdapter.getItem(position)
-
-        val popupMenu = PopupMenu(view.context, view)
-        popupMenu.inflate(R.menu.context_main)
-        popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.action_context_shortcut -> {
-                        requestAddShortcut(appItem)
-                    }
-                    R.id.action_context_rename -> {
-                        alertRename(position)
-                    }
-                    R.id.action_context_settings -> {
-                        Config.startApp(requireActivity(), appItem.title, appItem.pathExt, true)
-                    }
-                    R.id.action_context_reinstall -> {
-                        InstallerDialog.newInstance(appItem.id).show(parentFragmentManager, "installer")
-                    }
-                    R.id.action_context_delete -> {
-                        alertDelete(appItem)
-                    }
-                }
-                false
-            }
-        popupMenu.show()
-
-        if (!File(appItem.pathExt + Config.MIDLET_RES_FILE).exists()) {
-            popupMenu.menu.findItem(R.id.action_context_reinstall).isVisible = false
-        }
-    }
+//    private fun showPopupMenu(position: Int, view: View) {
+//
+//        val appItem = recyclerViewAdapter.getItem(position)
+//
+//        val popupMenu = PopupMenu(view.context, view)
+//        popupMenu.inflate(R.menu.context_main)
+//        popupMenu.setOnMenuItemClickListener { item ->
+//                when (item.itemId) {
+//                    R.id.action_context_shortcut -> {
+//                        //requestAddShortcut(appItem)
+//                    }
+//                    R.id.action_context_rename -> {
+//                        //alertRename(position)
+//                    }
+//                    R.id.action_context_settings -> {
+//                        Config.startApp(requireActivity(), appItem.title, appItem.getPathExt(), true)
+//                    }
+//                    R.id.action_context_reinstall -> {
+//                        InstallerDialog.newInstance(appItem.id).show(parentFragmentManager, "installer")
+//                    }
+//                    R.id.action_context_delete -> {
+//                        //alertDelete(appItem)
+//                    }
+//                }
+//                false
+//            }
+//        popupMenu.show()
+//
+//        if (!File(appItem.getPathExt() + Config.MIDLET_RES_FILE).exists()) {
+//            popupMenu.menu.findItem(R.id.action_context_reinstall).isVisible = false
+//        }
+//    }
 
     private fun alertDbError(throwable: Throwable) {
         val activity: Activity? = activity
@@ -171,95 +187,6 @@ class AppsListFragment : Fragment() {
         InstallerDialog.newInstance(uri).show(parentFragmentManager, "installer")
     }
 
-    private fun alertRename(id: Int) {
-        val item = recyclerViewAdapter.getItem(id)
-        val activity = requireActivity()
-        val editText = EditText(activity)
-        editText.setText(item.title)
-        val density = resources.displayMetrics.density
-        val linearLayout = LinearLayout(activity)
-        val params = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        val margin = (density * 20).toInt()
-        params.setMargins(margin, 0, margin, 0)
-        linearLayout.addView(editText, params)
-        val paddingVertical = (density * 16).toInt()
-        val paddingHorizontal = (density * 8).toInt()
-        editText.setPadding(paddingHorizontal, paddingVertical, paddingHorizontal, paddingVertical)
-        val builder = AlertDialog.Builder(activity)
-            .setTitle(R.string.action_context_rename)
-            .setView(linearLayout)
-            .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
-                val title = editText.text.toString().trim { it <= ' ' }
-                if (title == "") {
-                    Toast.makeText(getActivity(), R.string.error, Toast.LENGTH_SHORT).show()
-                } else {
-                    item.title = title
-                    appRepository!!.update(item)
-                }
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-        builder.show()
-    }
-
-    private fun alertDelete(item: AppItem) {
-        val builder = AlertDialog.Builder(requireActivity())
-            .setTitle(android.R.string.dialog_alert_title)
-            .setMessage(R.string.message_delete)
-            .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
-                AppUtils.deleteApp(item)
-                appRepository!!.delete(item)
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-        builder.show()
-    }
-
-    private fun requestAddShortcut(appItem: AppItem) {
-        val activity = requireActivity()
-        val bitmap = AppUtils.getIconBitmap(appItem)
-        val icon: IconCompat
-        if (bitmap == null) {
-            icon = IconCompat.createWithResource(activity, R.mipmap.ic_launcher)
-        } else {
-            val width = bitmap.width
-            val height = bitmap.height
-            val am = activity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-            val iconSize = am.launcherLargeIconSize
-            val src: Rect? = if (width > height) {
-                val left = (width - height) / 2
-                Rect(left, 0, left + height, height)
-            } else if (width < height) {
-                val top = (height - width) / 2
-                Rect(0, top, width, top + width)
-            } else {
-                null
-            }
-            val scaled = Bitmap.createBitmap(iconSize, iconSize, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(scaled)
-            canvas.drawBitmap(
-                bitmap,
-                src,
-                RectF(0f, 0f, iconSize.toFloat(), iconSize.toFloat()),
-                null
-            )
-            icon = IconCompat.createWithBitmap(scaled)
-        }
-        val title = appItem.title
-        val launchIntent = Intent(
-            Intent.ACTION_DEFAULT, Uri.parse(appItem.pathExt),
-            activity, ConfigActivity::class.java
-        )
-        launchIntent.putExtra(Constants.KEY_MIDLET_NAME, title)
-        val shortcut = ShortcutInfoCompat.Builder(activity, title)
-            .setIntent(launchIntent)
-            .setShortLabel(title)
-            .setIcon(icon)
-            .build()
-        ShortcutManagerCompat.requestPinShortcut(activity, shortcut, null)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main, menu)
     }
@@ -267,20 +194,16 @@ class AppsListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val activity = requireActivity()
         val itemId = item.itemId
-        if (itemId == R.id.action_about) {
-            val aboutDialogFragment = AboutDialogFragment()
-            aboutDialogFragment.show(childFragmentManager, "about")
-        } else if (itemId == R.id.action_profiles) {
+        if (itemId == R.id.action_profiles) {
             val intentProfiles = Intent(activity, ProfilesActivity::class.java)
             startActivity(intentProfiles)
         } else if (item.itemId == R.id.action_settings) {
             startActivity(Intent(activity, SettingsActivity::class.java))
             return true
-        } else if (itemId == R.id.action_help) {
-            val helpDialogFragment = HelpDialogFragment()
-            helpDialogFragment.show(childFragmentManager, "help")
         } else if (itemId == R.id.action_exit_app) {
-            activity.finish()
+            //activity.finish()
+
+            LicensesBottomDialog(activity).show()
         }
         return false
     }

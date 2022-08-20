@@ -21,28 +21,27 @@ import android.os.Bundle;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import app.utils.Constants;
+import app.utils.FileUtils;
 import ru.playsoftware.j2meloader.R;
 import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.config.ProfilesActivity;
-import app.utils.FileUtils;
-
-import static app.utils.Constants.PREF_EMULATOR_DIR;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
+
 	private Preference prefFolder;
 
 	@Override
 	public void onCreatePreferences(Bundle bundle, String s) {
 		addPreferencesFromResource(R.xml.preferences);
 		findPreference("pref_default_settings").setIntent(new Intent(requireActivity(), ProfilesActivity.class));
-		prefFolder = findPreference(PREF_EMULATOR_DIR);
+		prefFolder = findPreference(Constants.PREF_EMULATOR_DIR);
 		prefFolder.setSummary(Config.getEmulatorDir());
 		if (FileUtils.isExternalStorageLegacy()) {
 			prefFolder.setOnPreferenceClickListener(preference -> {
-
 				return true;
 			});
 		}
 	}
-
 }

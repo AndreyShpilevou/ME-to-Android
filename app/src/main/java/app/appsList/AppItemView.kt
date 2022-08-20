@@ -53,7 +53,8 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
 
         authorView = textView {
             gravity = Gravity.CENTER_HORIZONTAL
-            textSize = 13f
+            textSize = 12f
+            alpha = 0.9f
         }.lparams(wrapContent, wrapContent)
 
         setPadding(12.dp, 12.dp, 12.dp, 12.dp)
@@ -62,14 +63,14 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
 
     fun setItem(item: AppItem){
 
-        Drawable.createFromPath(item.imagePathExt)?.also{ icon ->
+        Drawable.createFromPath(item.getImagePathExt())?.also{ icon ->
             icon.isFilterBitmap = false
             iconView.imageDrawable = icon
         } ?: let {
             iconView.imageResources = R.mipmap.ic_launcher
         }
 
-        titleView.text = item.title
+        titleView.text = item.getDisplayTitle()
         authorView.text = item.author
         versionView.text = item.version
 

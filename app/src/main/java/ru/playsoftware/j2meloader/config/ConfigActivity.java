@@ -70,13 +70,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 import androidx.core.widget.TextViewCompat;
 
-import ru.playsoftware.j2meloader.R;
 import app.activities.BaseActivity;
-import ru.playsoftware.j2meloader.settings.KeyMapperActivity;
+import app.utils.Constants;
 import app.utils.FileUtils;
+import ru.playsoftware.j2meloader.R;
+import ru.playsoftware.j2meloader.settings.KeyMapperActivity;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
-import static app.utils.Constants.*;
+import static app.utils.Constants.ACTION_EDIT;
+import static app.utils.Constants.ACTION_EDIT_PROFILE;
+import static app.utils.Constants.KEY_MIDLET_NAME;
+import static app.utils.Constants.KEY_START_ARGUMENTS;
 
 public class ConfigActivity extends BaseActivity implements View.OnClickListener, ShaderTuneAlert.Callback {
 	private static final String TAG = ConfigActivity.class.getSimpleName();
@@ -87,6 +91,8 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 	protected AppCompatCheckBox cbLockAspect;
 	protected EditText tfScreenBack;
 	protected EditText tfScaleRatioValue;
+	protected Spinner spOrientation;
+	protected Spinner spScreenGravity;
 	protected Spinner spScaleType;
 	protected Checkable cxFilter;
 	protected Checkable cxImmediate;
@@ -161,7 +167,7 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 			workDir = Config.getEmulatorDir();
 			setTitle(path);
 		} else {
-			setTitle(intent.getStringExtra(KEY_MIDLET_NAME));
+			setTitle(intent.getStringExtra(Constants.KEY_MIDLET_NAME));
 			File appDir = new File(path);
 			File convertedDir = appDir.getParentFile();
 			if (!appDir.isDirectory() || convertedDir == null
@@ -195,7 +201,7 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		configDir.mkdirs();
 
 		defProfile = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-				.getString(PREF_DEFAULT_PROFILE, null);
+				.getString(Constants.PREF_DEFAULT_PROFILE, null);
 		loadConfig();
 		if (!params.isNew && !needShow) {
 			startMIDlet();
@@ -212,8 +218,10 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		tfScreenHeight = findViewById(R.id.tfScreenHeight);
 		cbLockAspect = findViewById(R.id.cbLockAspect);
 		tfScreenBack = findViewById(R.id.tfScreenBack);
+		spScreenGravity = findViewById(R.id.spScreenGravity);
 		spScaleType = findViewById(R.id.spScaleType);
 		tfScaleRatioValue = findViewById(R.id.tfScaleRatioValue);
+		spOrientation = findViewById(R.id.spOrientation);
 		cxFilter = findViewById(R.id.cxFilter);
 		cxImmediate = findViewById(R.id.cxImmediate);
 		spGraphicsMode = findViewById(R.id.spGraphicsMode);
@@ -635,7 +643,9 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		}
 		tfScreenBack.setText(String.format("%06X", params.screenBackgroundColor));
 		tfScaleRatioValue.setText(Integer.toString(params.screenScaleRatio));
+		spOrientation.setSelection(params.orientation);
 		spScaleType.setSelection(params.screenScaleType);
+		spScreenGravity.setSelection(params.screenGravity);
 		cxFilter.setChecked(params.screenFilter);
 		cxImmediate.setChecked(params.immediateMode);
 		cxParallel.setChecked(params.parallelRedrawScreen);
@@ -691,6 +701,8 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 			} catch (NumberFormatException e) {
 				params.screenScaleRatio = 100;
 			}
+			params.orientation = spOrientation.getSelectedItemPosition();
+			params.screenGravity = spScreenGravity.getSelectedItemPosition();
 			params.screenScaleType = spScaleType.getSelectedItemPosition();
 			params.screenFilter = cxFilter.isChecked();
 			params.immediateMode = cxImmediate.isChecked();

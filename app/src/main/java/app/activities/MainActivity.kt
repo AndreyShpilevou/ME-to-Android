@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.ViewConfiguration
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -24,13 +23,12 @@ import ru.woesss.j2me.installer.InstallerDialog
 import java.io.File
 
 class MainActivity : BaseActivity() {
+
     private val permissionsLauncher =
         registerForActivityResult<Array<String>, Map<String, Boolean>>(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { status: Map<String, Boolean> ->
-            onPermissionResult(
-                status
-            )
+            onPermissionResult(status)
         }
 
     private lateinit var preferences: SharedPreferences
@@ -59,29 +57,20 @@ class MainActivity : BaseActivity() {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-        if (!preferences.contains(Constants.PREF_TOOLBAR)) {
-            val enable = !ViewConfiguration.get(this).hasPermanentMenuKey()
-            preferences.edit().putBoolean(Constants.PREF_TOOLBAR, enable).apply()
-        }
-        val warningShown = preferences.getBoolean(Constants.PREF_STORAGE_WARNING_SHOWN, false)
-        if (!FileUtils.isExternalStorageLegacy() && !warningShown) {
-            showScopedStorageDialog()
-            preferences.edit().putBoolean(Constants.PREF_STORAGE_WARNING_SHOWN, true).apply()
-        }
         volumeControlStream = AudioManager.STREAM_MUSIC
     }
 
     private fun checkAndCreateDirs() {
         val emulatorDir = Config.getEmulatorDir()
+
         val dir = File(emulatorDir)
         if (dir.isDirectory && dir.canWrite()) {
             FileUtils.initWorkDir(dir)
-            appListModel!!.appRepository.onWorkDirReady()
+            appListModel.appRepository.onWorkDirReady()
             return
         }
-        if (dir.exists() || dir.parentFile == null || !dir.parentFile.isDirectory
-            || !dir.parentFile.canWrite()
-        ) {
+
+        if (dir.exists() || dir.parentFile == null || !dir.parentFile!!.isDirectory || !dir.parentFile!!.canWrite()) {
             alertDirCannotCreate(emulatorDir)
             return
         }
@@ -110,9 +99,7 @@ class MainActivity : BaseActivity() {
                 .setCancelable(false)
                 .setMessage(R.string.permission_request_failed)
                 .setNegativeButton(R.string.retry) { d, w ->
-                    permissionsLauncher.launch(
-                        STORAGE_PERMISSIONS
-                    )
+                    permissionsLauncher.launch(STORAGE_PERMISSIONS)
                 }
                 .setPositiveButton(R.string.exit) { d, w -> finish() }
                 .show()
@@ -120,16 +107,6 @@ class MainActivity : BaseActivity() {
             Toast.makeText(this, R.string.permission_request_failed, Toast.LENGTH_SHORT).show()
             finish()
         }
-    }
-
-    private fun showScopedStorageDialog() {
-        val message = getString(R.string.scoped_storage_warning) + Config.getEmulatorDir()
-        AlertDialog.Builder(this)
-            .setTitle(R.string.warning)
-            .setCancelable(false)
-            .setMessage(message)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
     }
 
     private fun onPickDirResult(uri: Uri?) {
