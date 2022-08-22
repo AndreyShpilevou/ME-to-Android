@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.playsoftware.j2meloader.config;
+package app.profile;
 
 import android.os.Build;
 import android.util.Log;
@@ -40,6 +40,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import app.utils.FileUtils;
 import app.utils.XmlUtils;
+import ru.playsoftware.j2meloader.config.Config;
 
 public class ProfilesManager {
 

@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package ru.playsoftware.j2meloader.config;
+package app.profile;
 
 import java.io.File;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import app.utils.FileUtils;
+import ru.playsoftware.j2meloader.config.Config;
 
 public class Profile implements Comparable<Profile> {
 

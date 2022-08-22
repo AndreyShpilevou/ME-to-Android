@@ -45,8 +45,8 @@ import javax.microedition.lcdui.keyboard.KeyMapper;
 
 import ru.playsoftware.j2meloader.R;
 import app.activities.BaseActivity;
-import ru.playsoftware.j2meloader.config.ProfileModel;
-import ru.playsoftware.j2meloader.config.ProfilesManager;
+import app.profile.ProfileModel;
+import app.profile.ProfilesManager;
 import app.utils.SparseIntArrayAdapter;
 
 public class KeyMapperActivity extends BaseActivity implements View.OnClickListener {

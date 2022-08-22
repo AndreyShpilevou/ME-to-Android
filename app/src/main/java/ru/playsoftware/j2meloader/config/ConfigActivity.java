@@ -71,6 +71,10 @@ import androidx.preference.PreferenceManager;
 import androidx.core.widget.TextViewCompat;
 
 import app.activities.BaseActivity;
+import app.profile.LoadProfileAlert;
+import app.profile.ProfileModel;
+import app.profile.ProfilesManager;
+import app.profile.SaveProfileAlert;
 import app.utils.Constants;
 import app.utils.FileUtils;
 import ru.playsoftware.j2meloader.R;

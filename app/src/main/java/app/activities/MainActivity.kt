@@ -7,18 +7,21 @@ import android.content.SharedPreferences
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import ru.playsoftware.j2meloader.R
 import app.appsList.AppListModel
-import app.appsList.AppsListFragment
-import ru.playsoftware.j2meloader.config.Config
+import app.appsList.AppsFragment
 import app.utils.Constants
 import app.utils.FileUtils
+import app.utils.ViewIdGenerator
+import app.views.*
+import ru.playsoftware.j2meloader.R
+import ru.playsoftware.j2meloader.config.Config
 import ru.woesss.j2me.installer.InstallerDialog
 import java.io.File
 
@@ -34,9 +37,19 @@ class MainActivity : BaseActivity() {
     private lateinit var preferences: SharedPreferences
     private lateinit var appListModel: AppListModel
 
+    private lateinit var frameLayout: FrameLayout
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        verticalLayout {
+
+            frameLayout = frameLayout {
+                id = ViewIdGenerator.generateViewId()
+
+            }.lparams(matchParent, matchParent, 1f)
+
+        }
 
         if (FileUtils.isExternalStorageLegacy()) {
             permissionsLauncher.launch(STORAGE_PERMISSIONS)
@@ -50,9 +63,12 @@ class MainActivity : BaseActivity() {
             if (intent.flags and Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY == 0) {
                 uri = intent.data
             }
-            val fragment = AppsListFragment.newInstance(uri)
+
+            val appsFragment = AppsFragment.newInstance(uri)
+
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment).commit()
+                .replace(frameLayout.id, appsFragment).commit()
+
         }
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -74,6 +90,7 @@ class MainActivity : BaseActivity() {
             alertDirCannotCreate(emulatorDir)
             return
         }
+
         alertCreateDir()
     }
 
@@ -109,14 +126,14 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun onPickDirResult(uri: Uri?) {
-        if (uri == null) {
-            checkAndCreateDirs()
-            return
-        }
-        val file = FileUtils.getFileForUri(uri)
-        applyWorkDir(file)
-    }
+//    private fun onPickDirResult(uri: Uri?) {
+//        if (uri == null) {
+//            checkAndCreateDirs()
+//            return
+//        }
+//        val file = FileUtils.getFileForUri(uri)
+//        applyWorkDir(file)
+//    }
 
     @SuppressLint("StringFormatMatches")
     private fun alertCreateDir() {

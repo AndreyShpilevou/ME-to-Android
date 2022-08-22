@@ -19,7 +19,6 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.fragment.app.FragmentActivity
-import app.activities.BaseActivity
 import app.dao.AppItem
 import app.dao.AppRepository
 import app.utils.*
@@ -32,8 +31,11 @@ import ru.playsoftware.j2meloader.config.ConfigActivity
 import ru.woesss.j2me.installer.InstallerDialog
 import java.io.File
 
-class AppCardBottomDialog(val activity: FragmentActivity, val appRepository: AppRepository, val appItem: AppItem)
-    : BottomSheetDialog(activity, R.style.BottomSheetDialog) {
+class AppCardBottomDialog(
+    private val activity: FragmentActivity,
+    private val appRepository: AppRepository,
+    private val appItem: AppItem
+) : BottomSheetDialog(activity, R.style.BottomSheetDialog) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +47,8 @@ class AppCardBottomDialog(val activity: FragmentActivity, val appRepository: App
             behavior.maxHeight = it
         }
 
+
+
         verticalLayout {
 
             verticalLayout {
@@ -53,29 +57,30 @@ class AppCardBottomDialog(val activity: FragmentActivity, val appRepository: App
                 cardView {
                     setCardBackgroundColor(ContextCompat.getColor(context, R.color.background))
                     radius = 12.dpF
-                }.lparams(60.dp, 6.dp){
+                }.lparams(60.dp, 6.dp) {
                     setMargins(0, 12.dp, 0, 12.dp)
                     gravity = Gravity.CENTER_HORIZONTAL
                 }
 
                 linearLayout {
+                    gravity = Gravity.CENTER_VERTICAL
 
                     imageView {
-                        Drawable.createFromPath(appItem.getImagePathExt())?.also{ icon ->
+                        Drawable.createFromPath(appItem.getImagePathExt())?.also { icon ->
                             icon.isFilterBitmap = false
                             imageDrawable = icon
                         } ?: let {
                             imageResources = R.mipmap.ic_launcher
                         }
-                    }.lparams(70.dp, 70.dp){
+                    }.lparams(70.dp, 70.dp) {
                         gravity = Gravity.CENTER_HORIZONTAL
                     }
 
                     verticalLayout {
 
                         textView {
-                            setText(appItem.getDisplayTitle())
-                            textSize = 22f
+                            text = appItem.getDisplayTitle()
+                            textSize = 20f
                             textColor = Color.BLACK
                             typeface = Typeface.DEFAULT_BOLD
                         }.lparams(matchParent, wrapContent)
@@ -97,26 +102,26 @@ class AppCardBottomDialog(val activity: FragmentActivity, val appRepository: App
                                 alpha = 0.8f
                             }.lparams(wrapContent, wrapContent)
 
-                        }.lparams(matchParent, wrapContent){
+                        }.lparams(matchParent, wrapContent) {
                             setMargins(0, 6.dp, 0, 0)
                         }
 
-                    }.lparams(matchParent, wrapContent, 1f){
-                        setMargins(24.dp, 0, 0, 0)
+                    }.lparams(matchParent, wrapContent, 1f) {
+                        setMargins(18.dp, 0, 0, 0)
                     }
 
-                }.lparams(matchParent, wrapContent){
-                    setMargins(24.dp, 24.dp, 24.dp, 24.dp)
+                }.lparams(matchParent, wrapContent) {
+                    setMargins(24.dp, 12.dp, 24.dp, 24.dp)
                 }
 
-            }.lparams(matchParent, wrapContent){
+            }.lparams(matchParent, wrapContent) {
                 setMargins(12.dp, 0, 12.dp, 18.dp)
             }
 
             button {
                 text = "Play"
                 backgroundResources = R.drawable.round_bg
-            }.lparams(matchParent, wrapContent){
+            }.lparams(matchParent, wrapContent) {
                 setMargins(12.dp, 6.dp, 12.dp, 6.dp)
             }.onClick {
                 Config.startApp(activity, appItem.getDisplayTitle(), appItem.getPathExt(), false)
@@ -125,7 +130,7 @@ class AppCardBottomDialog(val activity: FragmentActivity, val appRepository: App
             button {
                 text = "AddShortcut"
                 backgroundResources = R.drawable.round_bg
-            }.lparams(matchParent, wrapContent){
+            }.lparams(matchParent, wrapContent) {
                 setMargins(12.dp, 6.dp, 12.dp, 6.dp)
             }.onClick {
                 requestAddShortcut()
@@ -134,7 +139,7 @@ class AppCardBottomDialog(val activity: FragmentActivity, val appRepository: App
             button {
                 text = "Rename"
                 backgroundResources = R.drawable.round_bg
-            }.lparams(matchParent, wrapContent){
+            }.lparams(matchParent, wrapContent) {
                 setMargins(12.dp, 6.dp, 12.dp, 6.dp)
             }.onClick {
                 alertRename()
@@ -143,7 +148,7 @@ class AppCardBottomDialog(val activity: FragmentActivity, val appRepository: App
             button {
                 text = "Settings"
                 backgroundResources = R.drawable.round_bg
-            }.lparams(matchParent, wrapContent){
+            }.lparams(matchParent, wrapContent) {
                 setMargins(12.dp, 6.dp, 12.dp, 6.dp)
             }.onClick {
                 Config.startApp(activity, appItem.getDisplayTitle(), appItem.getPathExt(), true)
@@ -153,10 +158,11 @@ class AppCardBottomDialog(val activity: FragmentActivity, val appRepository: App
                 button {
                     text = "Reinstall"
                     backgroundResources = R.drawable.round_bg
-                }.lparams(matchParent, wrapContent){
+                }.lparams(matchParent, wrapContent) {
                     setMargins(12.dp, 6.dp, 12.dp, 6.dp)
                 }.onClick {
-                    InstallerDialog.newInstance(appItem.id).show(activity.supportFragmentManager, "installer")
+                    InstallerDialog.newInstance(appItem.id)
+                        .show(activity.supportFragmentManager, "installer")
                 }
             }
 
@@ -164,7 +170,7 @@ class AppCardBottomDialog(val activity: FragmentActivity, val appRepository: App
                 text = "Delete"
                 textColor = Color.RED
                 backgroundResources = R.drawable.round_bg
-            }.lparams(matchParent, wrapContent){
+            }.lparams(matchParent, wrapContent) {
                 setMargins(12.dp, 6.dp, 12.dp, 12.dp)
             }.onClick {
                 alertDelete()
@@ -173,8 +179,6 @@ class AppCardBottomDialog(val activity: FragmentActivity, val appRepository: App
         }
 
     }
-
-
 
     private fun requestAddShortcut() {
         val bitmap = AppUtils.getIconBitmap(appItem)

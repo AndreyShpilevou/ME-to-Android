@@ -1,14 +1,13 @@
 package app.appsList
 
 import android.annotation.SuppressLint
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import app.dao.AppItem
 import app.utils.onClick
 import app.utils.onLongClick
 
-class AppsListAdapter : RecyclerView.Adapter<AppsListAdapter.ViewHolder>() {
+class AppsAdapter : RecyclerView.Adapter<AppsAdapter.ViewHolder>() {
 
     var list: List<AppItem> = listOf()
 
@@ -41,7 +40,7 @@ class AppsListAdapter : RecyclerView.Adapter<AppsListAdapter.ViewHolder>() {
         }
 
         holder.itemView.onLongClick {
-            control?.onLongClickItem(position, it)
+            control?.onLongClickItem(position)
             false
         }
     }
@@ -54,7 +53,7 @@ class AppsListAdapter : RecyclerView.Adapter<AppsListAdapter.ViewHolder>() {
 
         fun onClickItem(position: Int)
 
-        fun onLongClickItem(position: Int, view: View)
+        fun onLongClickItem(position: Int)
 
     }
 

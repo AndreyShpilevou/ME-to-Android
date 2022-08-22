@@ -25,7 +25,6 @@ import android.graphics.RectF;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -45,8 +44,8 @@ import javax.microedition.shell.MicroActivity;
 import javax.microedition.util.ContextHolder;
 
 import ru.playsoftware.j2meloader.config.Config;
-import ru.playsoftware.j2meloader.config.ProfileModel;
-import ru.playsoftware.j2meloader.config.ProfilesManager;
+import app.profile.ProfileModel;
+import app.profile.ProfilesManager;
 
 public class VirtualKeyboard implements Overlay, Runnable {
 	private static final String TAG = VirtualKeyboard.class.getSimpleName();

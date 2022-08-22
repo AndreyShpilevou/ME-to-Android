@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package ru.playsoftware.j2meloader.config;
+package app.profile;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -33,6 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import ru.playsoftware.j2meloader.R;
+import ru.playsoftware.j2meloader.config.Config;
 
 public class EditNameAlert extends DialogFragment {
 
@@ -105,7 +106,7 @@ public class EditNameAlert extends DialogFragment {
 		dismiss();
 	}
 
-	interface Callback {
+	public interface Callback {
 		void onNameChanged(int id, String newName);
 	}
 }

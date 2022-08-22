@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.playsoftware.j2meloader.config;
+package app.profile;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -34,7 +34,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.PreferenceManager;
+
 import ru.playsoftware.j2meloader.R;
+import ru.playsoftware.j2meloader.config.ConfigActivity;
 
 import static app.utils.Constants.*;
 
@@ -43,7 +45,7 @@ public class LoadProfileAlert extends DialogFragment {
 	private CheckBox cbConfig;
 	private CheckBox cbKeyboard;
 
-	static LoadProfileAlert newInstance(String parent) {
+	static public LoadProfileAlert newInstance(String parent) {
 		LoadProfileAlert fragment = new LoadProfileAlert();
 		Bundle args = new Bundle();
 		args.putString(KEY_CONFIG_PATH, parent);

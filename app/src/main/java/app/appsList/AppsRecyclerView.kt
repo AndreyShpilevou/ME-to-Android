@@ -8,8 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import app.utils.dp
 import java.lang.StrictMath.min
 
-class AppsRecyclerView(context: Context) :
-    RecyclerView(context) {
+class AppsRecyclerView : RecyclerView {
+
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    constructor(context: Context, attrs: AttributeSet, default: Int) : super(context, attrs, default)
 
     @SuppressLint("DrawAllocation")
     override fun onMeasure(widthSpec: Int, heightSpec: Int) {

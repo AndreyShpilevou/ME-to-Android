@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package ru.playsoftware.j2meloader.config;
+package app.profile;
 
 import android.util.SparseIntArray;
 
@@ -27,6 +27,7 @@ import javax.microedition.lcdui.keyboard.VirtualKeyboard;
 import javax.microedition.util.ContextHolder;
 
 import app.utils.SparseIntArrayAdapter;
+import ru.playsoftware.j2meloader.config.ShaderInfo;
 
 public class ProfileModel {
 	public static final int VERSION = 3;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.playsoftware.j2meloader.config;
+package app.profile;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ru.playsoftware.j2meloader.R;
+import ru.playsoftware.j2meloader.config.Config;
 
 import static app.utils.Constants.KEY_CONFIG_PATH;
 import static app.utils.Constants.PREF_DEFAULT_PROFILE;
@@ -100,6 +101,7 @@ public class SaveProfileAlert extends DialogFragment {
 				.show();
 	}
 
+	@SuppressLint("StringFormatInvalid")
 	private void save(String name) {
 		try {
 			Profile profile = new Profile(name);

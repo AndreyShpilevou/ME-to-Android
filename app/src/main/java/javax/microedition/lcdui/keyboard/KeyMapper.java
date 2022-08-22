@@ -23,7 +23,7 @@ import android.view.KeyEvent;
 
 import androidx.collection.SparseArrayCompat;
 
-import ru.playsoftware.j2meloader.config.ProfileModel;
+import app.profile.ProfileModel;
 
 import static javax.microedition.lcdui.Canvas.*;
 

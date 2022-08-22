@@ -16,31 +16,20 @@ import ru.playsoftware.j2meloader.R
 
 class AppItemView(context: Context) : CustomVerticalLayout(context) {
 
-    private lateinit var iconView: ImageView
+    private var iconView: ImageView
     private var titleView: TextView
     private var authorView: TextView
-    private lateinit var versionView: TextView
 
     init{
         setWillNotDraw(false)
         gravity = Gravity.CENTER_HORIZONTAL
+        setPadding(12.dp, 12.dp, 12.dp, 12.dp)
 
-        frameLayout {
-
-            iconView = imageView {
-                imageResources = R.mipmap.ic_launcher
-            }.lparams(90.dp, 90.dp){
-                gravity = Gravity.CENTER_HORIZONTAL
-            }
-
-            versionView = textView {
-                textSize = 12f
-                alpha = 0.8f
-                setShadowLayer(4f, 0f, 1f, Color.BLACK)
-            }.lparams(wrapContent, wrapContent){
-                gravity = Gravity.RIGHT
-            }
-
+        iconView = imageView {
+            imageResources = R.mipmap.ic_launcher
+            backgroundResources = R.color.primary
+        }.lparams(90.dp, 90.dp){
+            gravity = Gravity.CENTER_HORIZONTAL
         }
 
         titleView = textView {
@@ -57,8 +46,6 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
             alpha = 0.9f
         }.lparams(wrapContent, wrapContent)
 
-        setPadding(12.dp, 12.dp, 12.dp, 12.dp)
-
     }
 
     fun setItem(item: AppItem){
@@ -72,8 +59,6 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
 
         titleView.text = item.getDisplayTitle()
         authorView.text = item.author
-        versionView.text = item.version
-
     }
 
     private val innerPadding = 3.dpF
