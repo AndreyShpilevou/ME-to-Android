@@ -86,7 +86,7 @@ import static app.utils.Constants.ACTION_EDIT_PROFILE;
 import static app.utils.Constants.KEY_MIDLET_NAME;
 import static app.utils.Constants.KEY_START_ARGUMENTS;
 
-public class ConfigActivity extends BaseActivity implements View.OnClickListener, ShaderTuneAlert.Callback {
+public class ConfigActivity extends BaseActivity implements View.OnClickListener, ShaderTuneAlert.Callback, SeekBar.OnSeekBarChangeListener {
 	private static final String TAG = ConfigActivity.class.getSimpleName();
 
 	protected ScrollView rootContainer;
@@ -147,6 +147,9 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 	private ImageButton btShaderTune;
 	private String workDir;
 	private boolean needShow;
+
+	private SeekBar tvGravityHorizontal;
+	private SeekBar tvGravityVertical;
 
 	@SuppressLint({"StringFormatMatches", "StringFormatInvalid"})
 	@Override
@@ -230,6 +233,9 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		shaderContainer = findViewById(R.id.shaderContainer);
 		cxParallel = findViewById(R.id.cxParallel);
 		cxForceFullscreen = findViewById(R.id.cxForceFullscreen);
+
+		tvGravityHorizontal = findViewById(R.id.tvGravityHorizontal);
+		tvGravityVertical = findViewById(R.id.tvGravityVertical);
 
 		tfFontSizeSmall = findViewById(R.id.tfFontSizeSmall);
 		tfFontSizeMedium = findViewById(R.id.tfFontSizeMedium);
@@ -350,6 +356,14 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		tfVKSelFore.addTextChangedListener(new ColorTextWatcher(tfVKSelFore));
 		tfVKSelBack.addTextChangedListener(new ColorTextWatcher(tfVKSelBack));
 		tfVKOutline.addTextChangedListener(new ColorTextWatcher(tfVKOutline));
+
+
+		tvGravityHorizontal.setProgress(params.screenGravityHorizontal);
+		tvGravityVertical.setProgress(params.screenGravityVertical);
+
+		tvGravityHorizontal.setOnSeekBarChangeListener(this);
+		tvGravityVertical.setOnSeekBarChangeListener(this);
+
 	}
 
 	private void onLockAspectChanged(CompoundButton cb, boolean isChecked) {
@@ -948,6 +962,21 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 	public void onTuneComplete(float[] values) {
 		params.shader.values = values;
 	}
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+		if(seekBar.getId() == R.id.tvGravityHorizontal){
+			params.screenGravityHorizontal = progress;
+		}else if(seekBar.getId() == R.id.tvGravityVertical){
+			params.screenGravityVertical = progress;
+		}
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {}
 
 	private static class ColorTextWatcher implements TextWatcher {
 		private final EditText editText;

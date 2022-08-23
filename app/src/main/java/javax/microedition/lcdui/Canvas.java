@@ -130,6 +130,9 @@ public abstract class Canvas extends Displayable {
 	private static boolean screenshotRawMode;
 	private static int scaleType;
 
+	private static int gravityHorizontal;
+	private static int gravityVertical;
+
 	private final Object bufferLock = new Object();
 	private final Object surfaceLock = new Object();
 	private final PaintEvent paintEvent = new PaintEvent();
@@ -182,6 +185,11 @@ public abstract class Canvas extends Displayable {
 	public static void setScale(int scaleType, int scaleRatio) {
 		Canvas.scaleType = scaleType;
 		Canvas.scaleRatio = scaleRatio;
+	}
+
+	public static void setGravity(int gravityHorizontal, int gravityVertical){
+		Canvas.gravityHorizontal = gravityHorizontal;
+		Canvas.gravityVertical = gravityVertical;
 	}
 
 	public static void setBackgroundColor(int color) {
@@ -411,8 +419,21 @@ public abstract class Canvas extends Displayable {
 		onWidth = onWidth * scaleRatio / 100;
 		onHeight = onHeight * scaleRatio / 100;
 
-		onX = (displayWidth - onWidth) / 2;
-		onY = (displayHeight - onHeight) / 2;
+		if(gravityHorizontal < 0){
+			onX = 0;
+		}else if(gravityHorizontal > 0){
+			onX = displayWidth - onWidth;
+		}else{
+			onX = (displayWidth - onWidth) / 2;
+		}
+
+		if(gravityVertical < 0){
+			onY = 0;
+		}else if(gravityVertical > 0){
+			onY = displayHeight - onHeight;
+		}else{
+			onY = (displayHeight - onHeight) / 2;
+		}
 
 //		switch (Canvas.screenGravity) {
 //			case 0: // left

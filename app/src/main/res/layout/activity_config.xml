@@ -329,13 +329,73 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cxParallel" />
 
+
+
+
+            <TextView
+                android:id="@+id/tvGravityHorizontalTitle"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_config_row"
+                android:checked="false"
+                android:gravity="center_vertical"
+                android:text="Horizontal"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="?attr/textColorSecondary"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cxForceFullscreen"
+                app:layout_constraintWidth_min="wrap" />
+
+            <SeekBar
+                android:id="@+id/tvGravityHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:max="1"
+                android:min="-1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tvGravityHorizontalTitle"
+                app:layout_constraintTop_toBottomOf="@+id/cxForceFullscreen"
+                tools:ignore="MissingConstraints" />
+
+
+
+            <TextView
+                android:id="@+id/tvGravityVerticalTitle"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_config_row"
+                android:checked="false"
+                android:gravity="center_vertical"
+                android:text="Vertical"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="?attr/textColorSecondary"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvGravityHorizontalTitle"
+                app:layout_constraintWidth_min="wrap" />
+
+            <SeekBar
+                android:id="@+id/tvGravityVertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:max="1"
+                android:min="-1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tvGravityVerticalTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvGravityHorizontalTitle"
+                tools:ignore="MissingConstraints" />
+
+
+
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrierScreenConfig"
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
                 app:barrierDirection="end"
                 app:constraint_referenced_ids="textView3,cmdScreenBack,textView4,tvScaleType,tvGraphicsMode" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout><!-- Screen -->
 

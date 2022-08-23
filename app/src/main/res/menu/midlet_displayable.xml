@@ -6,11 +6,6 @@
         android:title="@string/take_screenshot"
         app:showAsAction="ifRoom"/>
     <item
-        android:icon="@drawable/ic_action_exit"
-        android:id="@+id/action_exit_midlet"
-        android:title="@string/exit"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/action_lock_orientation"
         android:title="@string/action_lock_orientation"
         android:checkable="true"

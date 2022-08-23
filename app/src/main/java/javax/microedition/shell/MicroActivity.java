@@ -25,28 +25,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextUtils;
-import android.text.method.DigitsKeyListener;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -55,7 +47,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 
 import org.acra.ACRA;
@@ -103,8 +94,13 @@ public class MicroActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		lockNightMode();
 		super.onCreate(savedInstanceState);
+
 		ContextHolder.setCurrentActivity(this);
 		setContentView(R.layout.activity_micro);
+
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_exit);
+
 		overlayView = findViewById(R.id.vOverlay);
 		layout = findViewById(R.id.displayable_container);
 
@@ -280,14 +276,6 @@ public class MicroActivity extends AppCompatActivity {
 		builder.show();
 	}
 
-	private int getToolBarHeight() {
-		int[] attrs = new int[]{androidx.appcompat.R.attr.actionBarSize};
-		TypedArray ta = obtainStyledAttributes(attrs);
-		int toolBarHeight = ta.getDimensionPixelSize(0, -1);
-		ta.recycle();
-		return toolBarHeight;
-	}
-
 	private void showSystemUI() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
@@ -415,7 +403,7 @@ public class MicroActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		int id = item.getItemId();
-		if (id == R.id.action_exit_midlet) {
+		if (id == android.R.id.home) {
 			showExitConfirmation();
 		} else if (id == R.id.action_lock_orientation) {
 			if (item.isChecked()) {

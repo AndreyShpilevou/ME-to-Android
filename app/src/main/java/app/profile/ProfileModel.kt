@@ -69,8 +69,12 @@ class ProfileModel {
     var screenScaleType = 0
 
     @JvmField
-    @SerializedName("ScreenGravity")
-    var screenGravity = 0
+    @SerializedName("ScreenGravityHorizontal")
+    var screenGravityHorizontal = 0
+
+    @JvmField
+    @SerializedName("ScreenGravityVertical")
+    var screenGravityVertical = -1
 
     @JvmField
     @SerializedName("ScreenFilter")
@@ -129,7 +133,7 @@ class ProfileModel {
 
     @JvmField
     @SerializedName("VirtualKeyboardType")
-    var vkType = 0
+    var vkType = 1
 
     @JvmField
     @SerializedName("ButtonShape")
@@ -201,7 +205,6 @@ class ProfileModel {
         screenHeight = 320
         screenBackgroundColor = 0xD0D0D0
         screenScaleType = 1
-        screenGravity = 1
         screenScaleRatio = 100
         screenScaleToFit = true
         screenKeepAspectRatio = true
