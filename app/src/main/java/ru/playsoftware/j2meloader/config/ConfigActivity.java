@@ -103,8 +103,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 	protected Spinner spShader;
 	protected CompoundButton cxParallel;
 	protected Checkable cxForceFullscreen;
-	protected Checkable cxShowFps;
-	protected EditText tfFpsLimit;
 
 	protected EditText tfFontSizeSmall;
 	protected EditText tfFontSizeMedium;
@@ -232,8 +230,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		shaderContainer = findViewById(R.id.shaderContainer);
 		cxParallel = findViewById(R.id.cxParallel);
 		cxForceFullscreen = findViewById(R.id.cxForceFullscreen);
-		cxShowFps = findViewById(R.id.cxShowFps);
-		tfFpsLimit = findViewById(R.id.etFpsLimit);
 
 		tfFontSizeSmall = findViewById(R.id.tfFontSizeSmall);
 		tfFontSizeMedium = findViewById(R.id.tfFontSizeMedium);
@@ -652,7 +648,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		cxParallel.setChecked(params.parallelRedrawScreen);
 		cxForceFullscreen.setChecked(params.forceFullscreen);
 		spGraphicsMode.setSelection(params.graphicsMode);
-		cxShowFps.setChecked(params.showFps);
 
 		tfFontSizeSmall.setText(Integer.toString(params.fontSizeSmall));
 		tfFontSizeMedium.setText(Integer.toString(params.fontSizeMedium));
@@ -665,8 +660,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		cxVKFeedback.setChecked(params.vkFeedback);
 		cxVKForceOpacity.setChecked(params.vkForceOpacity);
 		cxTouchInput.setChecked(params.touchInput);
-		int fpsLimit = params.fpsLimit;
-		tfFpsLimit.setText(fpsLimit > 0 ? Integer.toString(fpsLimit) : "");
 
 		spLayout.setSelection(params.keyCodesLayout);
 		spButtonsShape.setSelection(params.vkButtonShape);
@@ -716,8 +709,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 			}
 			params.parallelRedrawScreen = cxParallel.isChecked();
 			params.forceFullscreen = cxForceFullscreen.isChecked();
-			params.showFps = cxShowFps.isChecked();
-			params.fpsLimit = parseInt(tfFpsLimit.getText().toString());
 
 			try {
 				params.fontSizeSmall = Integer.parseInt(tfFontSizeSmall.getText().toString());

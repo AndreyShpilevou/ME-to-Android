@@ -432,8 +432,6 @@ public class MicroActivity extends AppCompatActivity {
 					InputMethodManager.SHOW_FORCED, 0);
 		} else if (id == R.id.action_take_screenshot) {
 			takeScreenshot();
-		} else if (id == R.id.action_limit_fps) {
-			showLimitFpsDialog();
 		} else if (ContextHolder.getVk() != null) {
 			// Handled only when virtual keyboard is enabled
 			handleVkOptions(id);
@@ -544,40 +542,6 @@ public class MicroActivity extends AppCompatActivity {
 		builder.show();
 	}
 
-	private void showLimitFpsDialog() {
-		EditText editText = new EditText(this);
-		editText.setHint(R.string.unlimited);
-		editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-		editText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-		editText.setMaxLines(1);
-		editText.setSingleLine(true);
-		float density = getResources().getDisplayMetrics().density;
-		LinearLayout linearLayout = new LinearLayout(this);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
-		int margin = (int) (density * 20);
-		params.setMargins(margin, 0, margin, 0);
-		linearLayout.addView(editText, params);
-		int paddingVertical = (int) (density * 16);
-		int paddingHorizontal = (int) (density * 8);
-		editText.setPadding(paddingHorizontal, paddingVertical, paddingHorizontal, paddingVertical);
-		new AlertDialog.Builder(this)
-				.setTitle(R.string.PREF_LIMIT_FPS)
-				.setView(linearLayout)
-				.setPositiveButton(android.R.string.ok, (d, w) -> {
-					Editable text = editText.getText();
-					int fps = 0;
-					try {
-						fps = TextUtils.isEmpty(text) ? 0 : Integer.parseInt(text.toString().trim());
-					} catch (NumberFormatException ignored) {
-					}
-					microLoader.setLimitFps(fps);
-				})
-				.setNegativeButton(android.R.string.cancel, null)
-				.setNeutralButton(R.string.reset, ((d, which) -> microLoader.setLimitFps(-1)))
-				.show();
-	}
-
 	@Override
 	public boolean onContextItemSelected(@NonNull MenuItem item) {
 		if (current instanceof Form) {
@@ -617,19 +581,16 @@ public class MicroActivity extends AppCompatActivity {
 			layout.removeAllViews();
 			ActionBar actionBar = Objects.requireNonNull(getSupportActionBar());
 
-			int toolbarHeight = 0;
 			if (next instanceof Canvas) {
 				final String title = next.getTitle();
 				actionBar.setTitle(title == null ? appName : title);
-				toolbarHeight = (int) (getToolBarHeight() / 1.5);
 			} else {
 				showSystemUI();
 				actionBar.show();
 				final String title = next != null ? next.getTitle() : null;
 				actionBar.setTitle(title == null ? appName : title);
-				toolbarHeight = getToolBarHeight();
 			}
-			overlayView.setLocation(0, toolbarHeight);
+			overlayView.setLocation(0, 0);
 
 			if (next != null) {
 				layout.addView(next.getDisplayableView());

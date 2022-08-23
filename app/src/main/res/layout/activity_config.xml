@@ -329,56 +329,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cxParallel" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/cxShowFps"
-                style="@style/SwitchStyle"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/height_config_row"
-                android:checked="false"
-                android:text="@string/PREF_SHOW_FPS"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cxForceFullscreen" />
-
-
-            <TextView
-                android:id="@+id/tvLimitFps"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/height_config_row"
-                android:layout_marginBottom="9dp"
-                android:gravity="center_vertical"
-                android:text="@string/PREF_LIMIT_FPS"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="?attr/textColorSecondary"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toStartOf="@+id/barrierScreenConfig"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cxShowFps"
-                app:layout_constraintWidth_min="wrap" />
-
-            <EditText
-                android:id="@+id/etFpsLimit"
-                style="@style/EditTextStyle"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/height_config_row"
-                android:layout_marginBottom="9dp"
-                android:width="0dp"
-                android:gravity="center"
-                android:hint="@string/unlimited"
-                android:importantForAutofill="no"
-                android:inputType="number|numberSigned"
-                android:textDirection="ltr"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/barrierScreenConfig"
-                app:layout_constraintTop_toBottomOf="@+id/cxShowFps"
-                tools:ignore="UnusedAttribute" />
-
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrierScreenConfig"
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
                 app:barrierDirection="end"
-                app:constraint_referenced_ids="textView3,cmdScreenBack,textView4,tvScaleType,tvGraphicsMode,tvLimitFps" />
+                app:constraint_referenced_ids="textView3,cmdScreenBack,textView4,tvScaleType,tvGraphicsMode" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout><!-- Screen -->

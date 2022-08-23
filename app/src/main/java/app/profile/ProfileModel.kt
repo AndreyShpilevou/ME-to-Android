@@ -96,14 +96,6 @@ class ProfileModel {
     var parallelRedrawScreen = false
 
     @JvmField
-    @SerializedName("ShowFps")
-    var showFps = false
-
-    @JvmField
-    @SerializedName("FpsLimit")
-    var fpsLimit = 0
-
-    @JvmField
     @SerializedName("ForceFullscreen")
     var forceFullscreen = false
 
