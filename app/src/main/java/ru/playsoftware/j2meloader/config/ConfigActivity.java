@@ -71,10 +71,10 @@ import androidx.preference.PreferenceManager;
 import androidx.core.widget.TextViewCompat;
 
 import app.activities.BaseActivity;
-import app.profile.LoadProfileAlert;
+import ru.playsoftware.j2meloader.config.LoadProfileAlert;
 import app.profile.ProfileModel;
 import app.profile.ProfilesManager;
-import app.profile.SaveProfileAlert;
+import ru.playsoftware.j2meloader.config.SaveProfileAlert;
 import app.utils.Constants;
 import app.utils.FileUtils;
 import ru.playsoftware.j2meloader.R;
@@ -96,7 +96,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 	protected EditText tfScreenBack;
 	protected EditText tfScaleRatioValue;
 	protected Spinner spOrientation;
-	protected Spinner spScreenGravity;
 	protected Spinner spScaleType;
 	protected Checkable cxFilter;
 	protected Checkable cxImmediate;
@@ -222,7 +221,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		tfScreenHeight = findViewById(R.id.tfScreenHeight);
 		cbLockAspect = findViewById(R.id.cbLockAspect);
 		tfScreenBack = findViewById(R.id.tfScreenBack);
-		spScreenGravity = findViewById(R.id.spScreenGravity);
 		spScaleType = findViewById(R.id.spScaleType);
 		tfScaleRatioValue = findViewById(R.id.tfScaleRatioValue);
 		spOrientation = findViewById(R.id.spOrientation);
@@ -649,7 +647,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		tfScaleRatioValue.setText(Integer.toString(params.screenScaleRatio));
 		spOrientation.setSelection(params.orientation);
 		spScaleType.setSelection(params.screenScaleType);
-		spScreenGravity.setSelection(params.screenGravity);
 		cxFilter.setChecked(params.screenFilter);
 		cxImmediate.setChecked(params.immediateMode);
 		cxParallel.setChecked(params.parallelRedrawScreen);
@@ -706,7 +703,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 				params.screenScaleRatio = 100;
 			}
 			params.orientation = spOrientation.getSelectedItemPosition();
-			params.screenGravity = spScreenGravity.getSelectedItemPosition();
 			params.screenScaleType = spScaleType.getSelectedItemPosition();
 			params.screenFilter = cxFilter.isChecked();
 			params.immediateMode = cxImmediate.isChecked();

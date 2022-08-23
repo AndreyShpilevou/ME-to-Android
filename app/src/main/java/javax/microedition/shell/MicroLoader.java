@@ -243,7 +243,7 @@ public class MicroLoader {
 			int screenHeight = params.screenHeight;
 			Displayable.setVirtualSize(screenWidth, screenHeight);
 			Canvas.setBackgroundColor(params.screenBackgroundColor);
-			Canvas.setScale(params.screenGravity, params.screenScaleType, params.screenScaleRatio);
+			Canvas.setScale(params.screenScaleType, params.screenScaleRatio);
 			Canvas.setFilterBitmap(params.screenFilter);
 			EventQueue.setImmediate(params.immediateMode);
 			Canvas.setGraphicsMode(params.graphicsMode, params.parallelRedrawScreen);
@@ -253,7 +253,6 @@ public class MicroLoader {
 			}
 			Canvas.setShaderFilter(shader);
 			Canvas.setForceFullscreen(params.forceFullscreen);
-			Canvas.setShowFps(params.showFps);
 			Canvas.setLimitFps(params.fpsLimit);
 
 			Font.applySettings(params);

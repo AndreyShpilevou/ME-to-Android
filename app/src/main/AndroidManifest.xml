@@ -112,13 +112,16 @@
             android:name=".config.ConfigActivity"
             android:exported="true"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name="javax.microedition.shell.MicroActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize|uiMode"
             android:process=":midlet" />
-        <activity android:name=".settings.SettingsActivity"
+
+        <activity
+            android:name=".settings.SettingsActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
@@ -127,9 +130,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".settings.KeyMapperActivity" android:exported="false" />
+        <activity
+            android:name=".settings.KeyMapperActivity"
+            android:exported="false" />
 
-        <activity android:name="app.profile.ProfilesActivity" android:exported="false" />
+        <activity
+            android:name="app.profile.ProfilesActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -140,7 +147,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <activity android:name="com.nokia.mid.ui.NotificationActivity" />
+
     </application>
 
 </manifest>

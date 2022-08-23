@@ -1196,8 +1196,7 @@ public class VirtualKeyboard implements Overlay, Runnable {
 	public void saveScreenParams() {
 		float scale = virtualScreen.width() / screen.width();
 		settings.screenScaleRatio = Math.round(scale * 100);
-		settings.screenGravity = 1;
-		Canvas.setScale(settings.screenGravity, settings.screenScaleType, settings.screenScaleRatio);
+		Canvas.setScale(settings.screenScaleType, settings.screenScaleRatio);
 		ProfilesManager.saveConfig(settings);
 	}
 

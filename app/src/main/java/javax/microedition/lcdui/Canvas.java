@@ -67,7 +67,6 @@ import javax.microedition.lcdui.graphics.GlesView;
 import javax.microedition.lcdui.graphics.ShaderProgram;
 import javax.microedition.lcdui.keyboard.KeyMapper;
 import javax.microedition.lcdui.keyboard.VirtualKeyboard;
-import javax.microedition.lcdui.overlay.FpsCounter;
 import javax.microedition.lcdui.overlay.Layer;
 import javax.microedition.lcdui.overlay.Overlay;
 import javax.microedition.lcdui.overlay.OverlayView;
@@ -125,13 +124,11 @@ public abstract class Canvas extends Displayable {
 	private static ShaderInfo shaderFilter;
 	private static boolean parallelRedraw;
 	private static boolean forceFullscreen;
-	private static boolean showFps;
 	private static int backgroundColor;
 	private static int scaleRatio;
-	private static int fpsLimit;
+	private static int fpsLimit = 1000;
 	private static boolean screenshotRawMode;
 	private static int scaleType;
-	private static int screenGravity;
 
 	private final Object bufferLock = new Object();
 	private final Object surfaceLock = new Object();
@@ -157,7 +154,6 @@ public abstract class Canvas extends Displayable {
 	private long lastFrameTime = System.currentTimeMillis();
 	private Handler uiHandler;
 	private Overlay overlay;
-	private FpsCounter fpsCounter;
 	private boolean skipLeftSoft;
 	private boolean skipRightSoft;
 
@@ -183,8 +179,7 @@ public abstract class Canvas extends Displayable {
 		Canvas.shaderFilter = shader;
 	}
 
-	public static void setScale(int screenGravity, int scaleType, int scaleRatio) {
-		Canvas.screenGravity = screenGravity;
+	public static void setScale(int scaleType, int scaleRatio) {
 		Canvas.scaleType = scaleType;
 		Canvas.scaleRatio = scaleRatio;
 	}
@@ -208,10 +203,6 @@ public abstract class Canvas extends Displayable {
 
 	public static void setForceFullscreen(boolean forceFullscreen) {
 		Canvas.forceFullscreen = forceFullscreen;
-	}
-
-	public static void setShowFps(boolean showFps) {
-		Canvas.showFps = showFps;
 	}
 
 	public static void setLimitFps(int fpsLimit) {
@@ -309,9 +300,6 @@ public abstract class Canvas extends Displayable {
 			offscreenCopy.getBitmap().prepareToDraw();
 			g.drawImage(offscreenCopy, virtualScreen);
 		}
-		if (fpsCounter != null) {
-			fpsCounter.increment();
-		}
 	}
 
 	public Single<Bitmap> getScreenShot() {
@@ -367,35 +355,25 @@ public abstract class Canvas extends Displayable {
 		}
 		if (virtualWidth > 0) {
 			if (virtualHeight > 0) {
-				/*
-				 * the width and height of the canvas are strictly set
-				 */
 				width = virtualWidth;
 				height = virtualHeight;
 			} else {
-				/*
-				 * only the canvas width is set
-				 * height is selected by the ratio of the real screen
-				 */
 				width = virtualWidth;
 				height = scaledDisplayHeight * virtualWidth / displayWidth;
 			}
 		} else {
 			if (virtualHeight > 0) {
-				/*
-				 * only the canvas height is set
-				 * width is selected by the ratio of the real screen
-				 */
 				width = displayWidth * virtualHeight / scaledDisplayHeight;
 				height = virtualHeight;
 			} else {
-				/*
-				 * nothing is set - screen-sized canvas
-				 */
 				width = displayWidth;
 				height = scaledDisplayHeight;
 			}
 		}
+
+
+//		width = virtualWidth;
+//		height = virtualHeight;
 
 		/*
 		 * We turn the size of the canvas into the size of the image
@@ -404,28 +382,26 @@ public abstract class Canvas extends Displayable {
 		int scaleRatio = Canvas.scaleRatio;
 		switch (scaleType) {
 			case 0:
-				// without scaling
 				onWidth = width;
 				onHeight = height;
 				break;
 			case 1:
-				// try to fit in width
 				onWidth = displayWidth;
 				onHeight = height * displayWidth / width;
-				if (onHeight > scaledDisplayHeight) {
-					// if height is too big, then fit in height
-					onHeight = scaledDisplayHeight;
-					onWidth = width * scaledDisplayHeight / height;
+
+				if (onHeight > displayHeight) {
+					onWidth = width * displayHeight / height;
+					onHeight = displayHeight;
 				}
+
 				if (scaleRatio > 100) {
 					scaleRatio = 100;
 				}
 				break;
 			case 2:
-				// scaling without preserving the aspect ratio:
-				// just stretch the picture to full screen
 				onWidth = displayWidth;
-				onHeight = scaledDisplayHeight;
+				onHeight = displayHeight;
+
 				if (scaleRatio > 100) {
 					scaleRatio = 100;
 				}
@@ -435,29 +411,31 @@ public abstract class Canvas extends Displayable {
 		onWidth = onWidth * scaleRatio / 100;
 		onHeight = onHeight * scaleRatio / 100;
 
-		switch (Canvas.screenGravity) {
-			case 0: // left
-				onX = 0;
-				onY = (scaledDisplayHeight - onHeight) / 2;
-				break;
-			case 1: // top
-				onX = (displayWidth - onWidth) / 2;
-				onY = 0;
-				break;
-			case 2: // center
-				onX = (displayWidth - onWidth) / 2;
-				onY = (scaledDisplayHeight - onHeight) / 2;
-				break;
-			case 3: // right
-				onX = displayWidth - onWidth;
-				onY = (scaledDisplayHeight - onHeight) / 2;
-				break;
-			case 4: // bottom
-				onX = (displayWidth - onWidth) / 2;
-				onY = scaledDisplayHeight - onHeight;
-				break;
-		}
+		onX = (displayWidth - onWidth) / 2;
+		onY = (displayHeight - onHeight) / 2;
 
+//		switch (Canvas.screenGravity) {
+//			case 0: // left
+//				onX = 0;
+//				onY = (scaledDisplayHeight - onHeight) / 2;
+//				break;
+//			case 1: // top
+//				onX = (displayWidth - onWidth) / 2;
+//				onY = 0;
+//				break;
+//			case 2: // center
+//				onX = (displayWidth - onWidth) / 2;
+//				onY = (scaledDisplayHeight - onHeight) / 2;
+//				break;
+//			case 3: // right
+//				onX = displayWidth - onWidth;
+//				onY = (scaledDisplayHeight - onHeight) / 2;
+//				break;
+//			case 4: // bottom
+//				onX = (displayWidth - onWidth) / 2;
+//				onY = scaledDisplayHeight - onHeight;
+//				break;
+//		}
 
 		/*
 		 * calculate the maximum height
@@ -684,9 +662,6 @@ public abstract class Canvas extends Displayable {
 				}
 				surface.unlockCanvasAndPost(canvas);
 			}
-			if (fpsCounter != null) {
-				fpsCounter.increment();
-			}
 			if (parallelRedraw) uiHandler.removeMessages(0);
 		} catch (Exception e) {
 			Log.w(TAG, "repaintScreen: " + e);
@@ -798,9 +773,6 @@ public abstract class Canvas extends Displayable {
 				GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, offscreenCopy.getBitmap(), 0);
 			}
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-			if (fpsCounter != null) {
-				fpsCounter.increment();
-			}
 		}
 
 		private void initTex() {
@@ -1168,10 +1140,7 @@ public abstract class Canvas extends Displayable {
 			surface = holder.getSurface();
 			Display.postEvent(CanvasEvent.getInstance(Canvas.this, CanvasEvent.SHOW_NOTIFY));
 			repaintInternal();
-			if (showFps) {
-				fpsCounter = new FpsCounter(overlayView);
-				overlayView.addLayer(fpsCounter);
-			}
+
 			overlayView.addLayer(softBar, 0);
 			overlayView.setVisibility(true);
 			overlay = ContextHolder.getVk();
@@ -1189,11 +1158,7 @@ public abstract class Canvas extends Displayable {
 				surface = null;
 			}
 			Display.postEvent(CanvasEvent.getInstance(Canvas.this, CanvasEvent.HIDE_NOTIFY));
-			if (fpsCounter != null) {
-				fpsCounter.stop();
-				overlayView.removeLayer(fpsCounter);
-				fpsCounter = null;
-			}
+
 			overlayView.removeLayer(softBar);
 			softBar.closeMenu();
 			overlayView.setVisibility(false);
@@ -1356,16 +1321,17 @@ public abstract class Canvas extends Displayable {
 					textScale = 1.0f;
 					left = 0;
 					right = displayWidth;
-					bottom = vkTop;
+					//bottom = vkTop;
+					bottom = displayHeight;
 				} else {
 					textScale = (float) onWidth / displayWidth;
 					canvasWrapper.setTextScale(textScale);
 					left = onX;
 					right = onX + onWidth;
 					bottom = onY + onHeight;
-					if (bottom > vkTop) {
-						bottom = vkTop;
-					}
+//					if (bottom > vkTop) {
+//						bottom = vkTop;
+//					}
 				}
 			} else {
 				float width = onWidth;

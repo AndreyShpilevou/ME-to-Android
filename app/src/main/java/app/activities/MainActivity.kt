@@ -8,7 +8,6 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -19,6 +18,7 @@ import app.appsList.AppsFragment
 import app.utils.Constants
 import app.utils.FileUtils
 import app.utils.ViewIdGenerator
+import app.utils.toast
 import app.views.*
 import ru.playsoftware.j2meloader.R
 import ru.playsoftware.j2meloader.config.Config
@@ -108,8 +108,7 @@ class MainActivity : BaseActivity() {
             checkAndCreateDirs()
         } else if (ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
         ) {
             AlertDialog.Builder(this)
                 .setTitle(android.R.string.dialog_alert_title)
@@ -121,7 +120,7 @@ class MainActivity : BaseActivity() {
                 .setPositiveButton(R.string.exit) { d, w -> finish() }
                 .show()
         } else {
-            Toast.makeText(this, R.string.permission_request_failed, Toast.LENGTH_SHORT).show()
+            toast(R.string.permission_request_failed)
             finish()
         }
     }

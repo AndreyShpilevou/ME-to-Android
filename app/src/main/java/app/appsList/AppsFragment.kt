@@ -1,24 +1,36 @@
 package app.appsList
 
 import android.app.Activity
+import android.app.ActivityManager
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDiskIOException
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Rect
+import android.graphics.RectF
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.*
-import android.widget.Toast
+import android.widget.EditText
+import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import app.activities.BaseActivity
 import app.dao.AppItem
 import app.dao.AppRepository
-import app.dialogs.AppCardBottomDialog
-import app.dialogs.LicensesBottomDialog
 import app.profile.ProfilesActivity
 import app.utils.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,14 +39,28 @@ import ru.playsoftware.j2meloader.config.Config
 import ru.playsoftware.j2meloader.settings.SettingsActivity
 import app.views.*
 import app.views.anko.CustomFrameLayout
+import ru.playsoftware.j2meloader.config.ConfigActivity
 import ru.woesss.j2me.installer.InstallerDialog
+import java.io.File
 
 class AppsFragment : Fragment() {
+
+    companion object {
+        private val TAG = AppsFragment::class.java.simpleName
+        @JvmStatic
+        fun newInstance(data: Uri?): AppsFragment {
+            val fragment = AppsFragment()
+            val args = Bundle()
+            args.putParcelable(Constants.KEY_APP_URI, data)
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     private lateinit var emptyView: View
 
     private lateinit var recyclerView: RecyclerView
-    private val recyclerViewAdapter = AppsAdapter()
+    private lateinit var recyclerViewAdapter: AppsAdapter
 
     private var appUri: Uri? = null
     private var preferences: SharedPreferences? = null
@@ -70,7 +96,7 @@ class AppsFragment : Fragment() {
             }.lparams(matchParent, matchParent)
 
             emptyView = textView {
-                text = "no_data_for_display"
+                text = "no data"
             }.lparams(wrapContent, wrapContent){
                 gravity = Gravity.CENTER
             }
@@ -97,19 +123,8 @@ class AppsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        recyclerViewAdapter = AppsAdapter(requireActivity() as BaseActivity, appRepository)
         recyclerView.adapter = recyclerViewAdapter
-        recyclerViewAdapter.control = object : AppsAdapter.Control{
-
-            override fun onClickItem(position: Int) {
-                val item = recyclerViewAdapter.getItem(position)
-                Config.startApp(requireActivity(), item.getDisplayTitle(), item.getPathExt(), false)
-            }
-
-            override fun onLongClickItem(position: Int) {
-                val appItem = recyclerViewAdapter.getItem(position)
-                AppCardBottomDialog(requireActivity(), appRepository, appItem).show()
-            }
-        }
     }
 
     private fun alertDbError(throwable: Throwable) {
@@ -119,10 +134,10 @@ class AppsFragment : Fragment() {
             return
         }
         if (throwable is SQLiteDiskIOException) {
-            Toast.makeText(activity, R.string.error_disk_io, Toast.LENGTH_SHORT).show()
+            toast(R.string.error_disk_io)
         } else {
             val msg = activity.getString(R.string.error) + ": " + throwable.message
-            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+            toast(msg)
         }
     }
 
@@ -150,9 +165,9 @@ class AppsFragment : Fragment() {
             startActivity(Intent(activity, SettingsActivity::class.java))
             return true
         } else if (itemId == R.id.action_exit_app) {
-            //activity.finish()
+            activity.finish()
 
-            LicensesBottomDialog(activity).show()
+            //LicensesBottomDialog(activity).show()
         }
         return false
     }
@@ -169,15 +184,4 @@ class AppsFragment : Fragment() {
         }
     }
 
-    companion object {
-        private val TAG = AppsFragment::class.java.simpleName
-        @JvmStatic
-		fun newInstance(data: Uri?): AppsFragment {
-            val fragment = AppsFragment()
-            val args = Bundle()
-            args.putParcelable(Constants.KEY_APP_URI, data)
-            fragment.arguments = args
-            return fragment
-        }
-    }
 }

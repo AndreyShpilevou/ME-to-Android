@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import app.dao.AppItem
 import app.utils.dp
 import app.utils.dpF
@@ -23,17 +24,18 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
     init{
         setWillNotDraw(false)
         gravity = Gravity.CENTER_HORIZONTAL
-        setPadding(12.dp, 12.dp, 12.dp, 12.dp)
+        setPadding(12.dp, 18.dp, 12.dp, 12.dp)
 
         iconView = imageView {
             imageResources = R.mipmap.ic_launcher
             backgroundResources = R.color.primary
-        }.lparams(90.dp, 90.dp){
+        }.lparams(72.dp, 72.dp){
             gravity = Gravity.CENTER_HORIZONTAL
         }
 
         titleView = textView {
             gravity = Gravity.CENTER_HORIZONTAL
+            textColorResources = R.color.text_primary
             textSize = 16f
             typeface = Typeface.DEFAULT_BOLD
         }.lparams(matchParent, wrapContent){
@@ -42,8 +44,8 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
 
         authorView = textView {
             gravity = Gravity.CENTER_HORIZONTAL
+            textColorResources = R.color.text_secondary
             textSize = 12f
-            alpha = 0.9f
         }.lparams(wrapContent, wrapContent)
 
     }
@@ -61,13 +63,13 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
         authorView.text = item.author
     }
 
-    private val innerPadding = 3.dpF
+    private val innerPadding = 6.dpF
     private val cornerBorder = 12.dpF
     private var rectF = RectF()
     private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = 2f
-        color = Color.WHITE
+        strokeWidth = 1f
+        color = ContextCompat.getColor(context, R.color.text_secondary)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -84,5 +86,4 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
 
         })
     }
-
 }

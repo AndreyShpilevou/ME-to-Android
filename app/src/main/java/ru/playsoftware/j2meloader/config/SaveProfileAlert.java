@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package app.profile;
+package ru.playsoftware.j2meloader.config;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -33,8 +33,9 @@ import androidx.preference.PreferenceManager;
 import java.io.File;
 import java.io.IOException;
 
+import app.profile.Profile;
+import app.profile.ProfilesManager;
 import ru.playsoftware.j2meloader.R;
-import ru.playsoftware.j2meloader.config.Config;
 
 import static app.utils.Constants.KEY_CONFIG_PATH;
 import static app.utils.Constants.PREF_DEFAULT_PROFILE;

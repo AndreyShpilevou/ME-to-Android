@@ -92,7 +92,6 @@ public class MicroActivity extends AppCompatActivity {
 	private Displayable current;
 	private boolean visible;
 	private FrameLayout layout;
-	private Toolbar toolbar;
 	private MicroLoader microLoader;
 	private String appName;
 	private InputMethodManager inputMethodManager;
@@ -108,8 +107,7 @@ public class MicroActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_micro);
 		overlayView = findViewById(R.id.vOverlay);
 		layout = findViewById(R.id.displayable_container);
-		toolbar = findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
+
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		if (sp.getBoolean(PREF_KEEP_SCREEN, false)) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -618,23 +616,21 @@ public class MicroActivity extends AppCompatActivity {
 			}
 			layout.removeAllViews();
 			ActionBar actionBar = Objects.requireNonNull(getSupportActionBar());
-			LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar.getLayoutParams();
+
 			int toolbarHeight = 0;
 			if (next instanceof Canvas) {
 				final String title = next.getTitle();
 				actionBar.setTitle(title == null ? appName : title);
 				toolbarHeight = (int) (getToolBarHeight() / 1.5);
-				layoutParams.height = toolbarHeight;
 			} else {
 				showSystemUI();
 				actionBar.show();
 				final String title = next != null ? next.getTitle() : null;
 				actionBar.setTitle(title == null ? appName : title);
 				toolbarHeight = getToolBarHeight();
-				layoutParams.height = toolbarHeight;
 			}
 			overlayView.setLocation(0, toolbarHeight);
-			toolbar.setLayoutParams(layoutParams);
+
 			if (next != null) {
 				layout.addView(next.getDisplayableView());
 			}

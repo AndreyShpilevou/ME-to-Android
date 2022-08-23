@@ -45,7 +45,9 @@ class App : Application() {
         if (BuildConfig.DEBUG) {
             MultiDex.install(this)
         }
+
         ContextHolder.setApplication(this)
+
         init(
             this, CoreConfigurationBuilder()
                 .withBuildConfigClass(BuildConfig::class.java)
@@ -61,6 +63,7 @@ class App : Application() {
                         .build()
                 )
         )
+
         val enabled = getIsSignatureValid() && BuildConfig.FLAVOR != "dev"
         errorReporter.setEnabled(enabled)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
@@ -82,7 +85,7 @@ class App : Application() {
                 for (signature in signatures) {
                     md.update(signature.toByteArray())
                     val sha1 = bytesToHex(md.digest())
-                    if (Arrays.asList(*VALID_SIGNATURES).contains(sha1)) {
+                    if (listOf(*VALID_SIGNATURES).contains(sha1)) {
                         return true
                     }
                 }

@@ -24,6 +24,7 @@ import app.utils.Constants.ACTION_EDIT_PROFILE
 import app.utils.Constants.PREF_DEFAULT_PROFILE
 import app.utils.dp
 import app.views.*
+import ru.playsoftware.j2meloader.config.EditNameAlert
 
 class ProfilesActivity : BaseActivity(), EditNameAlert.Callback, OnItemClickListener {
 
@@ -63,8 +64,7 @@ class ProfilesActivity : BaseActivity(), EditNameAlert.Callback, OnItemClickList
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-        val profiles = ProfilesManager.getProfiles()
-
+        val profiles = ProfilesManager.profiles
 
         profilesAdapter = ProfilesAdapter(profiles)
 
@@ -97,7 +97,6 @@ class ProfilesActivity : BaseActivity(), EditNameAlert.Callback, OnItemClickList
             }
         }
 
-
         profilesAdapter.control = object : ProfilesAdapter.Control{
             override fun onClickItem(position: Int, view: View) {
 
@@ -107,25 +106,30 @@ class ProfilesActivity : BaseActivity(), EditNameAlert.Callback, OnItemClickList
                 popup.setOnMenuItemClickListener { item ->
 
                     val profile = profilesAdapter.getItem(position)
-                    val itemId = item.itemId
-                    if (itemId == R.id.action_context_default) {
-                        preferences.edit().putString(PREF_DEFAULT_PROFILE, profile.name).apply()
-                        profilesAdapter.setDefault(profile)
-                        return@setOnMenuItemClickListener true
-                    } else if (itemId == R.id.action_context_edit) {
-                        val intent = Intent(
-                            ACTION_EDIT_PROFILE,
-                            Uri.parse(profile.name),
-                            applicationContext, ConfigActivity::class.java
-                        )
-                        startActivity(intent)
-                        return@setOnMenuItemClickListener true
-                    } else if (itemId == R.id.action_context_rename) {
-                        EditNameAlert.newInstance(getString(R.string.enter_new_name), position)
-                            .show(supportFragmentManager, "alert_rename_profile")
-                    } else if (itemId == R.id.action_context_delete) {
-                        profile.delete()
-                        profilesAdapter.removeItem(position)
+
+                    when (item.itemId) {
+                        R.id.action_context_default -> {
+                            preferences.edit().putString(PREF_DEFAULT_PROFILE, profile.name).apply()
+                            profilesAdapter.setDefault(profile)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.action_context_edit -> {
+                            val intent = Intent(
+                                ACTION_EDIT_PROFILE,
+                                Uri.parse(profile.name),
+                                applicationContext, ConfigActivity::class.java
+                            )
+                            startActivity(intent)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.action_context_rename -> {
+                            EditNameAlert.newInstance(getString(R.string.enter_new_name), position)
+                                .show(supportFragmentManager, "alert_rename_profile")
+                        }
+                        R.id.action_context_delete -> {
+                            profile.delete()
+                            profilesAdapter.removeItem(position)
+                        }
                     }
 
                     return@setOnMenuItemClickListener false

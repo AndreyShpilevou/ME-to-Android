@@ -9,6 +9,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -31,7 +32,7 @@ inline fun <reified T : View> Activity.customView(init: (T).() -> Unit = {}) : T
     return view
 }
 
-inline fun <reified T : View> BottomSheetDialog.customView(init: (T).() -> Unit = {}) : T {
+inline fun <reified T : View> AppCompatDialog.customView(init: (T).() -> Unit = {}) : T {
     val view = context.customView<T>()
     setContentView(view.also(init))
     return view
@@ -43,19 +44,13 @@ inline fun <reified T : View> ViewGroup.customView(init: (T).() -> Unit = {}) : 
     return view
 }
 
-inline fun <reified T : View> AlertDialog.Builder.customView(init: (T).() -> Unit = {}) : T {
-    val view = context.customView<T>()
-    setView(view.also(init))
-    return view
-}
-
 
 
 fun Activity.nestedScrollView(init : (CustomNestedScrollView).() -> Unit = {}) : CustomNestedScrollView {
     return customView(init)
 }
 
-fun BottomSheetDialog.nestedScrollView(init : (CustomNestedScrollView).() -> Unit = {}) : CustomNestedScrollView {
+fun AppCompatDialog.nestedScrollView(init : (CustomNestedScrollView).() -> Unit = {}) : CustomNestedScrollView {
     return customView(init)
 }
 
@@ -68,7 +63,7 @@ fun Activity.linearLayout(init : (CustomLinearLayout).() -> Unit = {}) : CustomL
     return customView(init)
 }
 
-fun BottomSheetDialog.linearLayout(init : (CustomLinearLayout).() -> Unit = {}) : CustomLinearLayout {
+fun AppCompatDialog.linearLayout(init : (CustomLinearLayout).() -> Unit = {}) : CustomLinearLayout {
     return customView(init)
 }
 
@@ -81,7 +76,7 @@ fun Activity.verticalLayout(init : (CustomVerticalLayout).() -> Unit = {}) : Cus
     return customView(init)
 }
 
-fun BottomSheetDialog.verticalLayout(init : (CustomVerticalLayout).() -> Unit = {}) : CustomVerticalLayout {
+fun AppCompatDialog.verticalLayout(init : (CustomVerticalLayout).() -> Unit = {}) : CustomVerticalLayout {
     return customView(init)
 }
 
@@ -94,7 +89,7 @@ fun Activity.frameLayout(init : (CustomFrameLayout).() -> Unit = {}) : CustomFra
     return customView(init)
 }
 
-fun BottomSheetDialog.frameLayout(init : (CustomFrameLayout).() -> Unit = {}) : CustomFrameLayout {
+fun AppCompatDialog.frameLayout(init : (CustomFrameLayout).() -> Unit = {}) : CustomFrameLayout {
     return customView(init)
 }
 
@@ -107,7 +102,7 @@ fun Activity.relativeLayout(init : (CustomRelativeLayout).() -> Unit = {}) : Cus
     return customView(init)
 }
 
-fun BottomSheetDialog.relativeLayout(init : (CustomRelativeLayout).() -> Unit = {}) : CustomRelativeLayout {
+fun AppCompatDialog.relativeLayout(init : (CustomRelativeLayout).() -> Unit = {}) : CustomRelativeLayout {
     return customView(init)
 }
 
@@ -120,7 +115,7 @@ fun Activity.recyclerView(init : (RecyclerView).() -> Unit = {}) : RecyclerView{
     return customView(init)
 }
 
-fun BottomSheetDialog.recyclerView(init : (RecyclerView).() -> Unit = {}) : RecyclerView {
+fun AppCompatDialog.recyclerView(init : (RecyclerView).() -> Unit = {}) : RecyclerView {
     return customView(init)
 }
 
@@ -133,7 +128,7 @@ fun Activity.view(init : (View).() -> Unit = {}) : View{
     return customView(init)
 }
 
-fun BottomSheetDialog.view(init : (View).() -> Unit = {}) : View{
+fun AppCompatDialog.view(init : (View).() -> Unit = {}) : View{
     return customView(init)
 }
 
@@ -146,7 +141,7 @@ fun Activity.textView(init : (TextView).() -> Unit = {}) : TextView{
     return customView(init)
 }
 
-fun BottomSheetDialog.textView(init : (TextView).() -> Unit = {}) : TextView{
+fun AppCompatDialog.textView(init : (TextView).() -> Unit = {}) : TextView{
     return customView(init)
 }
 
@@ -159,7 +154,7 @@ fun Activity.imageView(init : (ImageView).() -> Unit = {}) : ImageView {
     return customView(init)
 }
 
-fun BottomSheetDialog.imageView(init : (ImageView).() -> Unit = {}) : ImageView{
+fun AppCompatDialog.imageView(init : (ImageView).() -> Unit = {}) : ImageView{
     return customView(init)
 }
 
@@ -172,7 +167,7 @@ fun Activity.editText(init : (EditText).() -> Unit = {}) : EditText{
     return customView(init)
 }
 
-fun BottomSheetDialog.editText(init : (EditText).() -> Unit = {}) : EditText{
+fun AppCompatDialog.editText(init : (EditText).() -> Unit = {}) : EditText{
     return customView(init)
 }
 
@@ -185,7 +180,7 @@ fun Activity.button(init : (Button).() -> Unit = {}) : Button{
     return customView(init)
 }
 
-fun BottomSheetDialog.button(init : (Button).() -> Unit = {}) : Button{
+fun AppCompatDialog.button(init : (Button).() -> Unit = {}) : Button{
     return customView(init)
 }
 
@@ -198,7 +193,7 @@ fun Activity.imageButton(init : (ImageButton).() -> Unit = {}) : ImageButton{
     return customView(init)
 }
 
-fun BottomSheetDialog.imageButton(init : (ImageButton).() -> Unit = {}) : ImageButton{
+fun AppCompatDialog.imageButton(init : (ImageButton).() -> Unit = {}) : ImageButton{
     return customView(init)
 }
 
@@ -211,7 +206,7 @@ fun Activity.checkBox(init : (CheckBox).() -> Unit = {}) : CheckBox{
     return customView(init)
 }
 
-fun BottomSheetDialog.checkBox(init : (CheckBox).() -> Unit = {}) : CheckBox{
+fun AppCompatDialog.checkBox(init : (CheckBox).() -> Unit = {}) : CheckBox{
     return customView(init)
 }
 
@@ -224,7 +219,7 @@ fun Activity.tabLayout(init : (TabLayout).() -> Unit = {}) : TabLayout{
     return customView(init)
 }
 
-fun BottomSheetDialog.tabLayout(init : (TabLayout).() -> Unit = {}) : TabLayout{
+fun AppCompatDialog.tabLayout(init : (TabLayout).() -> Unit = {}) : TabLayout{
     return customView(init)
 }
 
@@ -237,7 +232,7 @@ fun Activity.viewPager2(init : (ViewPager2).() -> Unit = {}) : ViewPager2{
     return customView(init)
 }
 
-fun BottomSheetDialog.viewPager2(init : (ViewPager2).() -> Unit = {}) : ViewPager2{
+fun AppCompatDialog.viewPager2(init : (ViewPager2).() -> Unit = {}) : ViewPager2{
     return customView(init)
 }
 
@@ -250,7 +245,7 @@ fun Activity.cardView(init : (CustomCardView).() -> Unit = {}) : CustomCardView 
     return customView(init)
 }
 
-fun BottomSheetDialog.cardView(init : (CustomCardView).() -> Unit = {}) : CustomCardView {
+fun AppCompatDialog.cardView(init : (CustomCardView).() -> Unit = {}) : CustomCardView {
     return customView(init)
 }
 

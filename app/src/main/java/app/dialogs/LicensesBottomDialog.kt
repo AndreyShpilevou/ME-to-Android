@@ -1,6 +1,7 @@
 package app.dialogs
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import androidx.core.content.ContextCompat
@@ -43,6 +44,7 @@ class LicensesBottomDialog(context: Context)
 
                     val string = ContextHolder.getAssetAsString("licenses.html")
                     text = HtmlCompat.fromHtml(string, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    textColor = Color.DKGRAY
 
                 }.lparams(matchParent, matchParent){
                     setMargins(24.dp, 24.dp, 24.dp, 24.dp)

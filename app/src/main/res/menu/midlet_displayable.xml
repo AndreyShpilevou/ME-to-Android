@@ -1,27 +1,29 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:icon="@drawable/ic_action_screenshot"
+        android:id="@+id/action_take_screenshot"
+        android:title="@string/take_screenshot"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:icon="@drawable/ic_action_exit"
         android:id="@+id/action_exit_midlet"
-        android:title="@string/exit" />
+        android:title="@string/exit"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_lock_orientation"
         android:title="@string/action_lock_orientation"
         android:checkable="true"
         android:checked="false"
         android:visible="false" />
+    <item
+        android:id="@+id/action_limit_fps"
+        android:title="@string/PREF_LIMIT_FPS" />
     <group android:id="@+id/action_group_canvas">
         <item
             android:icon="@drawable/ic_action_keyboard"
             android:id="@+id/action_ime_keyboard"
             android:title="@string/action_keyboard_ime" />
-        <item
-            android:icon="@drawable/ic_action_screenshot"
-            android:id="@+id/action_take_screenshot"
-            android:title="@string/take_screenshot" />
-
-        <item
-            android:id="@+id/action_limit_fps"
-            android:title="@string/PREF_LIMIT_FPS" />
-
         <item
             android:id="@+id/action_submenu_vk"
             android:title="@string/PREF_VIRTUAL_KEYBOARD_OPTIONS">

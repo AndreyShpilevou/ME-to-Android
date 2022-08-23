@@ -25,21 +25,22 @@
     </style>
 
     <style name="Widget.AppTheme.OverflowMenu" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
-        <item name="android:popupBackground">@color/background</item>
+        <item name="android:popupBackground">#ffffff</item>
         <item name="overlapAnchor">false</item>
     </style>
 
     <style name="PopupMenuTextAppearanceHeader" parent="TextAppearance.AppCompat.Widget.PopupMenu.Header">
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">#000000</item>
     </style>
 
     <style name="PopupMenuTextAppearanceSmall" parent="TextAppearance.AppCompat.Widget.PopupMenu.Small">
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">#000000</item>
     </style>
 
     <style name="PopupMenuTextAppearanceLarge" parent="TextAppearance.AppCompat.Widget.PopupMenu.Large">
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">#000000</item>
     </style>
+
 
     <style name="ConfigTitleTextStyle">
         <item name="android:layout_width">match_parent</item>
