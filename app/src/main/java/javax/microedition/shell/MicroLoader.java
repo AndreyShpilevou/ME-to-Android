@@ -27,6 +27,8 @@ import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.KeyEvent;
 
+import androidx.core.content.ContextCompat;
+
 import org.acra.ACRA;
 import org.acra.ErrorReporter;
 
@@ -61,6 +63,7 @@ import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.playsoftware.j2meloader.BuildConfig;
+import ru.playsoftware.j2meloader.R;
 import ru.playsoftware.j2meloader.config.Config;
 import app.profile.ProfileModel;
 import app.profile.ProfilesManager;
@@ -237,7 +240,7 @@ public class MicroLoader {
 			int screenWidth = params.screenWidth;
 			int screenHeight = params.screenHeight;
 			Displayable.setVirtualSize(screenWidth, screenHeight);
-			//Canvas.setBackgroundColor(params.screenBackgroundColor);
+			Canvas.setBackgroundColor(ContextCompat.getColor(context, R.color.primary_dark));
 			Canvas.setScale(params.screenScaleType, params.screenScaleRatio);
 			Canvas.setGravity(params.screenGravityHorizontal, params.screenGravityVertical);
 			Canvas.setFilterBitmap(params.screenFilter);

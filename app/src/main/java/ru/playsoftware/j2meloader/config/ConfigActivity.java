@@ -93,7 +93,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 	protected EditText tfScreenWidth;
 	protected EditText tfScreenHeight;
 	protected AppCompatCheckBox cbLockAspect;
-	protected EditText tfScreenBack;
 	protected EditText tfScaleRatioValue;
 	protected Spinner spOrientation;
 	protected Spinner spScaleType;
@@ -221,7 +220,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		tfScreenWidth = findViewById(R.id.tfScreenWidth);
 		tfScreenHeight = findViewById(R.id.tfScreenHeight);
 		cbLockAspect = findViewById(R.id.cbLockAspect);
-		tfScreenBack = findViewById(R.id.tfScreenBack);
 		spScaleType = findViewById(R.id.spScaleType);
 		tfScaleRatioValue = findViewById(R.id.tfScaleRatioValue);
 		spOrientation = findViewById(R.id.spOrientation);
@@ -273,14 +271,12 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		findViewById(R.id.cmdSwapSizes).setOnClickListener(this);
 		findViewById(R.id.cmdAddToPreset).setOnClickListener(v -> addResolutionToPresets());
 		findViewById(R.id.cmdFontSizePresets).setOnClickListener(this);
-		findViewById(R.id.cmdScreenBack).setOnClickListener(this);
 		findViewById(R.id.cmdKeyMappings).setOnClickListener(this);
 		findViewById(R.id.cmdVKBack).setOnClickListener(this);
 		findViewById(R.id.cmdVKFore).setOnClickListener(this);
 		findViewById(R.id.cmdVKSelBack).setOnClickListener(this);
 		findViewById(R.id.cmdVKSelFore).setOnClickListener(this);
 		findViewById(R.id.cmdVKOutline).setOnClickListener(this);
-		findViewById(R.id.btEncoding).setOnClickListener(this::showCharsetPicker);
 		btShaderTune.setOnClickListener(this::showShaderSettings);
 		tfScaleRatioValue.addTextChangedListener(new TextWatcher() {
 			@Override
@@ -350,7 +346,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 			rootContainer.addOnLayoutChangeListener(onLayoutChangeListener);
 			groupVkConfig.setVisibility(cxShowKeyboard.isChecked() ? View.VISIBLE : View.GONE);
 		});
-		tfScreenBack.addTextChangedListener(new ColorTextWatcher(tfScreenBack));
 		tfVKFore.addTextChangedListener(new ColorTextWatcher(tfVKFore));
 		tfVKBack.addTextChangedListener(new ColorTextWatcher(tfVKBack));
 		tfVKSelFore.addTextChangedListener(new ColorTextWatcher(tfVKSelFore));
@@ -653,7 +648,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 		if (screenHeight != 0) {
 			tfScreenHeight.setText(Integer.toString(screenHeight));
 		}
-		tfScreenBack.setText(String.format("%06X", params.screenBackgroundColor));
 		tfScaleRatioValue.setText(Integer.toString(params.screenScaleRatio));
 		spOrientation.setSelection(params.orientation);
 		spScaleType.setSelection(params.screenScaleType);
@@ -696,14 +690,9 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 
 	private void saveParams() {
 		try {
-			int width = parseInt(tfScreenWidth.getText().toString());
-			params.screenWidth = width;
-			int height = parseInt(tfScreenHeight.getText().toString());
-			params.screenHeight = height;
-			try {
-				params.screenBackgroundColor = Integer.parseInt(tfScreenBack.getText().toString(), 16);
-			} catch (NumberFormatException ignored) {
-			}
+			params.screenWidth = parseInt(tfScreenWidth.getText().toString());
+			params.screenHeight = parseInt(tfScreenHeight.getText().toString());
+
 			try {
 				params.screenScaleRatio = Integer.parseInt(tfScaleRatioValue.getText().toString());
 			} catch (NumberFormatException e) {
@@ -875,8 +864,6 @@ public class ConfigActivity extends BaseActivity implements View.OnClickListener
 								tfFontSizeLarge.setText(Integer.toString(values[2]));
 							})
 					.show();
-		} else if (id == R.id.cmdScreenBack) {
-			showColorPicker(tfScreenBack);
 		} else if (id == R.id.cmdVKBack) {
 			showColorPicker(tfVKBack);
 		} else if (id == R.id.cmdVKFore) {

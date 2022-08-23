@@ -28,7 +28,6 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
 
         iconView = imageView {
             imageResources = R.mipmap.ic_launcher
-            backgroundResources = R.color.primary
         }.lparams(72.dp, 72.dp){
             gravity = Gravity.CENTER_HORIZONTAL
         }
@@ -66,11 +65,16 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
     private val innerPadding = 6.dpF
     private val cornerBorder = 12.dpF
     private var rectF = RectF()
+    private val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = ContextCompat.getColor(context, R.color.primary)
+    }
     private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 1f
         color = ContextCompat.getColor(context, R.color.text_secondary)
     }
+
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -82,6 +86,7 @@ class AppItemView(context: Context) : CustomVerticalLayout(context) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas.apply {
 
+            drawRoundRect(rectF, cornerBorder, cornerBorder, bgPaint)
             drawRoundRect(rectF, cornerBorder, cornerBorder, borderPaint)
 
         })

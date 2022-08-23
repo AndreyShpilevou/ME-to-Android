@@ -47,10 +47,6 @@ class ProfileModel {
     var screenHeight = 0
 
     @JvmField
-    @SerializedName("ScreenBackgroundColor")
-    var screenBackgroundColor = 0
-
-    @JvmField
     @SerializedName("ScreenScaleRatio")
     var screenScaleRatio = 0
 
@@ -203,7 +199,6 @@ class ProfileModel {
         version = VERSION
         screenWidth = 240
         screenHeight = 320
-        screenBackgroundColor = 0xD0D0D0
         screenScaleType = 1
         screenScaleRatio = 100
         screenScaleToFit = true
