@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder
 import javax.microedition.lcdui.keyboard.VirtualKeyboard
 import android.os.Build
 import android.util.Log
-import ru.playsoftware.j2meloader.config.Config
 import java.io.*
 import java.lang.Exception
 import java.lang.StringBuilder
@@ -19,7 +18,7 @@ object ProfilesManager {
     @JvmStatic
 	val profiles: ArrayList<Profile>
         get() {
-            val root = File(Config.getProfilesDir())
+            val root = File(Config.profilesDir)
             return getList(root)
         }
 

@@ -43,7 +43,7 @@ import javax.microedition.lcdui.overlay.Overlay;
 import javax.microedition.shell.MicroActivity;
 import javax.microedition.util.ContextHolder;
 
-import ru.playsoftware.j2meloader.config.Config;
+import app.profile.Config;
 import app.profile.ProfileModel;
 import app.profile.ProfilesManager;
 

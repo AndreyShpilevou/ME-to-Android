@@ -71,7 +71,7 @@ import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import ru.playsoftware.j2meloader.BuildConfig;
 import ru.playsoftware.j2meloader.R;
-import ru.playsoftware.j2meloader.config.Config;
+import app.profile.Config;
 import app.utils.Constants;
 
 public class MicroActivity extends AppCompatActivity {

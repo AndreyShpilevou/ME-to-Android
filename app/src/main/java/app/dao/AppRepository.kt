@@ -16,7 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
-import ru.playsoftware.j2meloader.config.Config
+import app.profile.Config
 import app.utils.Constants
 import java.io.File
 import java.util.ArrayList
@@ -137,7 +137,7 @@ class AppRepository(model: AppListModel) : OnSharedPreferenceChangeListener {
 
     fun onWorkDirReady() {
         if (db == null) {
-            initDb(Config.getEmulatorDir())
+            initDb(Config.emulatorDir)
         }
     }
 
@@ -155,7 +155,7 @@ class AppRepository(model: AppListModel) : OnSharedPreferenceChangeListener {
         context = model.getApplication()
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         preferences.registerOnSharedPreferenceChangeListener(this)
-        val emulatorDir = Config.getEmulatorDir()
+        val emulatorDir = Config.emulatorDir
         val dir = File(emulatorDir)
         if (dir.isDirectory && dir.canWrite()) {
             initDb(emulatorDir)

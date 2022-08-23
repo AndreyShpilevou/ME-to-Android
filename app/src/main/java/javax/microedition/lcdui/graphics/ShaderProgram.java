@@ -25,7 +25,7 @@ import java.nio.FloatBuffer;
 import javax.microedition.lcdui.ViewHandler;
 import javax.microedition.util.ContextHolder;
 
-import ru.playsoftware.j2meloader.config.ShaderInfo;
+import app.profile.ShaderInfo;
 import app.utils.FileUtils;
 
 import static android.opengl.GLES20.*;

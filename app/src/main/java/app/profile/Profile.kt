@@ -1,7 +1,6 @@
 package app.profile
 
 import app.utils.FileUtils.deleteDirectory
-import ru.playsoftware.j2meloader.config.Config
 import java.io.File
 import java.util.*
 
@@ -12,7 +11,7 @@ class Profile(var name: String) : Comparable<Profile> {
 
     fun renameTo(newName: String): Boolean {
         val oldDir = dir
-        val newDir = File(Config.getProfilesDir(), newName)
+        val newDir = File(Config.profilesDir, newName)
         name = newName
         return oldDir.renameTo(newDir)
     }
@@ -22,11 +21,11 @@ class Profile(var name: String) : Comparable<Profile> {
     }
 
     val dir: File
-        get() = File(Config.getProfilesDir(), name)
+        get() = File(Config.profilesDir, name)
     val config: File
-        get() = File(Config.getProfilesDir(), name + Config.MIDLET_CONFIG_FILE)
+        get() = File(Config.profilesDir, name + Config.MIDLET_CONFIG_FILE)
     val keyLayout: File
-        get() = File(Config.getProfilesDir(), name + Config.MIDLET_KEY_LAYOUT_FILE)
+        get() = File(Config.profilesDir, name + Config.MIDLET_KEY_LAYOUT_FILE)
 
     override fun toString(): String {
         return name
@@ -52,6 +51,6 @@ class Profile(var name: String) : Comparable<Profile> {
     }
 
     fun hasOldConfig(): Boolean {
-        return File(Config.getProfilesDir(), "$name/config.xml").exists()
+        return File(Config.profilesDir, "$name/config.xml").exists()
     }
 }

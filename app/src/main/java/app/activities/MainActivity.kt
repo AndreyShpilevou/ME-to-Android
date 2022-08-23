@@ -21,7 +21,7 @@ import app.utils.ViewIdGenerator
 import app.utils.toast
 import app.views.*
 import ru.playsoftware.j2meloader.R
-import ru.playsoftware.j2meloader.config.Config
+import app.profile.Config
 import ru.woesss.j2me.installer.InstallerDialog
 import java.io.File
 
@@ -77,7 +77,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun checkAndCreateDirs() {
-        val emulatorDir = Config.getEmulatorDir()
+        val emulatorDir = Config.emulatorDir
 
         val dir = File(emulatorDir)
         if (dir.isDirectory && dir.canWrite()) {
@@ -87,7 +87,7 @@ class MainActivity : BaseActivity() {
         }
 
         if (dir.exists() || dir.parentFile == null || !dir.parentFile!!.isDirectory || !dir.parentFile!!.canWrite()) {
-            alertDirCannotCreate(emulatorDir)
+            alertDirCannotCreate(emulatorDir!!)
             return
         }
 
@@ -136,7 +136,7 @@ class MainActivity : BaseActivity() {
 
     @SuppressLint("StringFormatMatches")
     private fun alertCreateDir() {
-        val emulatorDir = Config.getEmulatorDir()
+        val emulatorDir = Config.emulatorDir
         val lblChange = getString(R.string.change)
         val msg = getString(R.string.alert_msg_workdir_not_exists, emulatorDir, lblChange)
         AlertDialog.Builder(this)

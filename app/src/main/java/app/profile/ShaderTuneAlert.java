@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package ru.playsoftware.j2meloader.config;
+package app.profile;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -33,7 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import ru.playsoftware.j2meloader.R;
-import ru.playsoftware.j2meloader.config.ShaderInfo.Setting;
+import app.profile.ShaderInfo.Setting;
 
 public class ShaderTuneAlert extends DialogFragment {
 
@@ -43,7 +43,7 @@ public class ShaderTuneAlert extends DialogFragment {
 	private Callback callback;
 	private float[] values;
 
-	static ShaderTuneAlert newInstance(ShaderInfo shader) {
+	public static ShaderTuneAlert newInstance(ShaderInfo shader) {
 		ShaderTuneAlert fragment = new ShaderTuneAlert();
 		Bundle args = new Bundle();
 		args.putParcelable(SHADER_KEY, shader);

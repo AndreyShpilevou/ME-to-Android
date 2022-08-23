@@ -25,7 +25,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import app.utils.Constants;
 import app.utils.FileUtils;
 import ru.playsoftware.j2meloader.R;
-import ru.playsoftware.j2meloader.config.Config;
+import app.profile.Config;
 import app.profile.ProfilesActivity;
 
 public class SettingsFragment extends PreferenceFragmentCompat {

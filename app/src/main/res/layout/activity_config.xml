@@ -5,7 +5,7 @@
     android:id="@+id/configRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".config.ConfigActivity">
+    tools:context="app.profile.ConfigActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

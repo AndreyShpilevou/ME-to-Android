@@ -30,7 +30,7 @@ import java.io.InputStream;
 
 import dalvik.system.DexClassLoader;
 import ru.playsoftware.j2meloader.BuildConfig;
-import ru.playsoftware.j2meloader.config.Config;
+import app.profile.Config;
 import app.utils.FileUtils;
 import app.utils.IOUtils;
 

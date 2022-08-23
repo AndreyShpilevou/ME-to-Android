@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.playsoftware.j2meloader.config.Config;
+import app.profile.Config;
 import app.utils.Constants;
 
 public class AppCenterSender implements ReportSender {

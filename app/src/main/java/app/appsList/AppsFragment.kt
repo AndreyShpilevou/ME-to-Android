@@ -1,28 +1,14 @@
 package app.appsList
 
 import android.app.Activity
-import android.app.ActivityManager
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDiskIOException
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Rect
-import android.graphics.RectF
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.*
-import android.widget.EditText
-import android.widget.LinearLayout
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.pm.ShortcutInfoCompat
-import androidx.core.content.pm.ShortcutManagerCompat
-import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -35,13 +21,10 @@ import app.profile.ProfilesActivity
 import app.utils.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.playsoftware.j2meloader.R
-import ru.playsoftware.j2meloader.config.Config
 import ru.playsoftware.j2meloader.settings.SettingsActivity
 import app.views.*
 import app.views.anko.CustomFrameLayout
-import ru.playsoftware.j2meloader.config.ConfigActivity
 import ru.woesss.j2me.installer.InstallerDialog
-import java.io.File
 
 class AppsFragment : Fragment() {
 

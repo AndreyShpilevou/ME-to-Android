@@ -5,7 +5,7 @@ import app.dao.AppRepository
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
-import ru.playsoftware.j2meloader.config.Config
+import app.profile.Config
 import ru.woesss.j2me.jar.Descriptor
 import java.io.File
 import java.io.IOException
@@ -17,7 +17,7 @@ object AppUtils {
 
     private fun getAppsList(appFolders: List<String>): ArrayList<AppItem> {
         val apps = ArrayList<AppItem>()
-        val appsDir = File(Config.getAppDir())
+        val appsDir = File(Config.appDir)
         for (appFolderName in appFolders) {
             val appFolder = File(appsDir, appFolderName)
             if (!appFolder.isDirectory) {
@@ -67,7 +67,7 @@ object AppUtils {
     @JvmStatic
     @Throws(IOException::class)
     fun findApp(name: String?, vendor: String?, uid: String?): AppItem? {
-        val appsDir = File(Config.getAppDir())
+        val appsDir = File(Config.appDir)
         for (appFolderName in appsDir.list()!!) {
             val appDir = File(appsDir, appFolderName)
             if (!appDir.isDirectory) {
@@ -103,18 +103,18 @@ object AppUtils {
     fun deleteApp(item: AppItem) {
         val appDir = File(item.getPathExt())
         FileUtils.deleteDirectory(appDir)
-        val appSaveDir = File(Config.getDataDir(), item.path)
+        val appSaveDir = File(Config.dataDir, item.path)
         FileUtils.deleteDirectory(appSaveDir)
-        val appConfigsDir = File(Config.getConfigsDir(), item.path)
+        val appConfigsDir = File(Config.configsDir, item.path)
         FileUtils.deleteDirectory(appConfigsDir)
     }
 
     fun updateDb(appRepository: AppRepository, items: MutableList<AppItem>) {
-        val tmp = File(Config.getAppDir(), ".tmp")
+        val tmp = File(Config.appDir, ".tmp")
         if (tmp.exists()) {
             FileUtils.deleteDirectory(tmp)
         }
-        val appFolders = File(Config.getAppDir()).list()
+        val appFolders = File(Config.appDir).list()
         if (appFolders == null || appFolders.isEmpty()) {
             if (items.size != 0) {
                 appRepository.deleteAll()

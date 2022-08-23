@@ -28,8 +28,8 @@ import app.utils.*
 import app.views.matchParent
 import app.views.wrapContent
 import ru.playsoftware.j2meloader.R
-import ru.playsoftware.j2meloader.config.Config
-import ru.playsoftware.j2meloader.config.ConfigActivity
+import app.profile.Config
+import app.profile.ConfigActivity
 import ru.woesss.j2me.installer.InstallerDialog
 import java.io.File
 

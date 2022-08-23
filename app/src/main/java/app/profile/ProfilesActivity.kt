@@ -6,7 +6,6 @@ import android.widget.AdapterView.OnItemClickListener
 import android.content.SharedPreferences
 import androidx.activity.result.contract.ActivityResultContract
 import android.content.Intent
-import ru.playsoftware.j2meloader.config.ConfigActivity
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -24,7 +23,6 @@ import app.utils.Constants.ACTION_EDIT_PROFILE
 import app.utils.Constants.PREF_DEFAULT_PROFILE
 import app.utils.dp
 import app.views.*
-import ru.playsoftware.j2meloader.config.EditNameAlert
 
 class ProfilesActivity : BaseActivity(), EditNameAlert.Callback, OnItemClickListener {
 

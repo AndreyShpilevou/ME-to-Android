@@ -21,7 +21,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Process;
 import android.os.Vibrator;
 import android.view.Display;
 import android.view.WindowManager;
@@ -47,7 +46,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import ru.playsoftware.j2meloader.BuildConfig;
-import ru.playsoftware.j2meloader.config.Config;
+import app.profile.Config;
 
 public class ContextHolder {
 	private static Display display;

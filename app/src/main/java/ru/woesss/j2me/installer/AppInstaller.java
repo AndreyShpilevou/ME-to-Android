@@ -46,7 +46,7 @@ import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import app.dao.AppItem;
 import app.dao.AppRepository;
-import ru.playsoftware.j2meloader.config.Config;
+import app.profile.Config;
 import app.utils.ConverterException;
 import app.utils.FileUtils;
 import app.utils.ZipUtils;

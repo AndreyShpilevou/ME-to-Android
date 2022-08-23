@@ -47,7 +47,7 @@ import ru.playsoftware.j2meloader.R;
 import app.dao.AppItem;
 import app.appsList.AppListModel;
 import app.dao.AppRepository;
-import ru.playsoftware.j2meloader.config.Config;
+import app.profile.Config;
 import app.utils.FileUtils;
 import ru.woesss.j2me.jar.Descriptor;
 

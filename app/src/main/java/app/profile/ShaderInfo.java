@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package ru.playsoftware.j2meloader.config;
+package app.profile;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -35,7 +35,7 @@ public class ShaderInfo implements Comparable<ShaderInfo>, Parcelable {
 	String author;
 	transient boolean outputResolution;
 	transient boolean upscaling;
-	transient Setting[] settings = new Setting[4];
+	public transient Setting[] settings = new Setting[4];
 	@SerializedName("Settings")
 	public float[] values;
 
@@ -237,14 +237,14 @@ public class ShaderInfo implements Comparable<ShaderInfo>, Parcelable {
 		dest.writeArray(settings);
 	}
 
-	static class Setting implements Parcelable {
-		String name;
-		float def;
-		float min;
-		float max;
-		float step;
+	static public class Setting implements Parcelable {
+		public String name;
+		public float def;
+		public float min;
+		public float max;
+		public float step;
 
-		protected Setting(Parcel in) {
+		public Setting(Parcel in) {
 			name = in.readString();
 			def = in.readFloat();
 			min = in.readFloat();

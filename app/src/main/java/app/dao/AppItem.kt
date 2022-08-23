@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import ru.playsoftware.j2meloader.R
-import ru.playsoftware.j2meloader.config.Config
+import app.profile.Config
 
 @Entity(tableName = "apps", indices = [Index(value = ["path"], unique = true)])
 data class AppItem(
@@ -23,7 +23,7 @@ data class AppItem(
 
     fun getDisplayTitle() = displayName ?: title
 
-    fun getPathExt() = Config.getAppDir() + path
+    fun getPathExt() = Config.appDir + path
 
     fun setImagePathExt(imagePath: String) {
         var imagePath = imagePath
@@ -33,7 +33,7 @@ data class AppItem(
         this.imagePath = path + imagePath
     }
 
-    fun getImagePathExt() = if (imagePath == null) null else Config.getAppDir() + imagePath
+    fun getImagePathExt() = if (imagePath == null) null else Config.appDir + imagePath
 
     fun getAuthorExt(context: Context): String {
         return context.getString(R.string.author) + author

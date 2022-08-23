@@ -16,11 +16,9 @@
 package app.profile
 
 import com.google.gson.annotations.SerializedName
-import ru.playsoftware.j2meloader.config.ShaderInfo
 import com.google.gson.annotations.JsonAdapter
 import app.utils.SparseIntArrayAdapter
 import android.util.SparseIntArray
-import app.profile.ProfileModel
 import java.io.File
 import javax.microedition.lcdui.keyboard.VirtualKeyboard
 import javax.microedition.util.ContextHolder

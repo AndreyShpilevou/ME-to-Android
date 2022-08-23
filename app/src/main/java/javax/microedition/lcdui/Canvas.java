@@ -76,7 +76,7 @@ import javax.microedition.util.ContextHolder;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import ru.playsoftware.j2meloader.R;
-import ru.playsoftware.j2meloader.config.ShaderInfo;
+import app.profile.ShaderInfo;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class Canvas extends Displayable {
