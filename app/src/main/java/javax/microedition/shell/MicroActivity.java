@@ -158,8 +158,10 @@ public class MicroActivity extends AppCompatActivity {
 		if (vk != null) {
 			vk.setView(overlayView);
 			overlayView.addLayer(vk);
-			if (vk.isPhone()) {
+			if (vk.isVertical()) {
 				orientation = ORIENTATION_PORTRAIT;
+			}else{
+				orientation = ORIENTATION_LANDSCAPE;
 			}
 		}
 		setOrientation(orientation);
@@ -521,10 +523,10 @@ public class MicroActivity extends AppCompatActivity {
 				.setSingleChoiceItems(R.array.PREF_VK_TYPE_ENTRIES, vk.getLayout(), null)
 				.setPositiveButton(android.R.string.ok, (d, w) -> {
 					vk.setLayout(((AlertDialog) d).getListView().getCheckedItemPosition());
-					if (vk.isPhone()) {
+					if (vk.isVertical()) {
 						setOrientation(ORIENTATION_PORTRAIT);
 					} else {
-						setOrientation(microLoader.getOrientation());
+						setOrientation(ORIENTATION_LANDSCAPE); // microLoader.getOrientation()
 					}
 				});
 		builder.show();

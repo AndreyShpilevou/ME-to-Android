@@ -1,6 +1,7 @@
 /*
  * Copyright 2012 Kulikov Dmitriy
  * Copyright 2017-2018 Nikita Shakarun
+ * Copyright 2022 Shpilevoy Andrey
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +22,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Vibrator;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -45,6 +45,7 @@ import javax.microedition.shell.MicroActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import app.utils.AppVibrator;
 import ru.playsoftware.j2meloader.BuildConfig;
 import app.profile.Config;
 
@@ -52,7 +53,7 @@ public class ContextHolder {
 	private static Display display;
 	private static VirtualKeyboard vk;
 	private static WeakReference<MicroActivity> currentActivity;
-	private static Vibrator vibrator;
+	private static AppVibrator vibrator;
 	private static Context appContext;
 	private static final ArrayList<ActivityResultListener> resultListeners = new ArrayList<>();
 	private static boolean vibrationEnabled;
@@ -176,7 +177,7 @@ public class ContextHolder {
 			return false;
 		}
 		if (vibrator == null) {
-			vibrator = (Vibrator) getAppContext().getSystemService(Context.VIBRATOR_SERVICE);
+			vibrator = new AppVibrator(getAppContext());
 		}
 		if (vibrator == null || !vibrator.hasVibrator()) {
 			return false;
@@ -193,7 +194,7 @@ public class ContextHolder {
 
 	public static void vibrateKey(int duration) {
 		if (vibrator == null) {
-			vibrator = (Vibrator) getAppContext().getSystemService(Context.VIBRATOR_SERVICE);
+			vibrator = new AppVibrator(getAppContext());
 		}
 		if (vibrator == null || !vibrator.hasVibrator()) {
 			return;

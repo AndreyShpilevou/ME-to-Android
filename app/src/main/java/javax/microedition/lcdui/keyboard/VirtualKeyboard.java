@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -808,6 +809,13 @@ public class VirtualKeyboard implements Overlay, Runnable {
 		return layoutVariant == TYPE_PHONE || layoutVariant == TYPE_PHONE_ARROWS;
 	}
 
+	public boolean isVertical(){
+		return layoutVariant == TYPE_PHONE ||
+				layoutVariant == TYPE_PHONE_ARROWS ||
+				layoutVariant == TYPE_ARROWS ||
+				layoutVariant == TYPE_NUMBERS;
+	}
+
 	private void highlightGroup(int group) {
 		for (VirtualKey aKeypad : keypad) {
 			aKeypad.selected = false;
@@ -1356,8 +1364,9 @@ public class VirtualKeyboard implements Overlay, Runnable {
 			if (selected) {
 				selected = false;
 				handler.removeCallbacks(this);
-				MicroActivity activity = ContextHolder.getActivity();
-				if (activity != null) {
+
+				AppCompatActivity activity = ContextHolder.getActivity();
+				if (activity != null && activity instanceof MicroActivity) {
 					activity.openOptionsMenu();
 				}
 			}

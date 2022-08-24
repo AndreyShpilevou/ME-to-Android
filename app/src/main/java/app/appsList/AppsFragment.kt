@@ -98,6 +98,9 @@ class AppsFragment : Fragment() {
                     }
                 }
                 openFileLauncher.launch(path)
+            }.onLongClick {
+                //startActivity<PActivity>()
+                false
             }
 
         }

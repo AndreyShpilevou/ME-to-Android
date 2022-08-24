@@ -32,6 +32,15 @@ public class OverlayView extends View {
 	private int x;
 	private int y;
 
+	public OverlayView(Context context) {
+		super(context, null);
+		if (isInEditMode()) { // fix for IDE preview
+			graphics = null;
+		} else {
+			graphics = new CanvasWrapper(false);
+		}
+	}
+
 	public OverlayView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		if (isInEditMode()) { // fix for IDE preview
