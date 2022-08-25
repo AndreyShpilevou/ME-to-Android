@@ -101,8 +101,8 @@ public class MicroActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_exit);
 
-		overlayView = findViewById(R.id.vOverlay);
-		layout = findViewById(R.id.displayable_container);
+		overlayView = findViewById(R.id.overlay);
+		layout = findViewById(R.id.displayable);
 
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		if (sp.getBoolean(PREF_KEEP_SCREEN, false)) {

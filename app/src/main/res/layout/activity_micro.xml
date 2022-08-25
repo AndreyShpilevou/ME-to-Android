@@ -8,12 +8,12 @@
     tools:context="javax.microedition.shell.MicroActivity">
 
     <FrameLayout
-        android:id="@+id/displayable_container"
+        android:id="@+id/displayable"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <javax.microedition.lcdui.overlay.OverlayView
-        android:id="@+id/vOverlay"
+        android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
